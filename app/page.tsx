@@ -1,65 +1,217 @@
-import Image from "next/image";
+import Link from "next/link";
+
+const apps = [
+  {
+    slug: "amortizacao",
+    url: "https://amortizacao.matematico.com.br",
+    emoji: "📊",
+    nome: "Amortização",
+    tagline: "Sistema de Financiamentos",
+    descricao: "Calcule cronogramas completos de amortização pelo sistema Price, SAC ou Variável. Simule carência, balões e veja o custo efetivo total.",
+    recursos: ["Price, SAC e Variável", "Pagamentos balão", "Carência", "Exportar PDF e Excel"],
+    status: "ativo",
+    corBorda: "border-emerald-500/30",
+    corGrad: "from-emerald-500/15 to-emerald-500/3",
+    corCheck: "text-emerald-400",
+    corBtn: "bg-emerald-600 hover:bg-emerald-500",
+    corTag: "text-emerald-400",
+  },
+  {
+    slug: "avaliacao",
+    url: "#",
+    emoji: "🏢",
+    nome: "Avaliação",
+    tagline: "Avaliação de Empresas",
+    descricao: "Valuation completo pelo método do fluxo de caixa descontado, múltiplos de mercado e patrimônio líquido ajustado.",
+    recursos: ["Fluxo de caixa descontado", "Múltiplos de mercado", "Relatório executivo", "Comparativo setorial"],
+    status: "breve",
+    corBorda: "border-blue-500/20",
+    corGrad: "from-blue-500/10 to-blue-500/3",
+    corCheck: "text-blue-400",
+    corBtn: "",
+    corTag: "text-blue-400",
+  },
+  {
+    slug: "atualizacao",
+    url: "#",
+    emoji: "📈",
+    nome: "Atualização",
+    tagline: "Atualização de Valores",
+    descricao: "Atualize valores pela inflação com IPCA, IGPM, INPC e outros índices. Calcule juros, multas e correções monetárias com precisão.",
+    recursos: ["IPCA, IGPM, INPC", "Juros e multas", "Série histórica", "Exportar laudo"],
+    status: "breve",
+    corBorda: "border-purple-500/20",
+    corGrad: "from-purple-500/10 to-purple-500/3",
+    corCheck: "text-purple-400",
+    corBtn: "",
+    corTag: "text-purple-400",
+  },
+];
+
+const diferenciais = [
+  { icone: "🎯", titulo: "Precisão", descricao: "Cálculos baseados em matemática financeira rigorosa, com resultados confiáveis para decisões importantes." },
+  { icone: "⚡", titulo: "Velocidade", descricao: "Resultados instantâneos. Simule cenários em segundos e compare alternativas sem esperar." },
+  { icone: "📋", titulo: "Relatórios", descricao: "Exporte cronogramas e análises em PDF e Excel, prontos para apresentação ou arquivo." },
+  { icone: "🔒", titulo: "Segurança", descricao: "Seus dados ficam protegidos com autenticação segura e armazenamento criptografado." },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-[#080808] text-white">
+
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#080808]/80 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-black tracking-tight">
+              <span className="text-white">M</span><span className="text-emerald-400">.</span>
+            </span>
+            <span className="text-sm font-semibold text-white/60 hidden sm:block">matemático.com.br</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <a href="#apps" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Apps</a>
+            <a href="#diferenciais" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Por que usar</a>
+            <a href="#contato" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Contato</a>
+            <Link href="https://amortizacao.matematico.com.br" className="text-sm bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+              Acessar →
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section className="pt-40 pb-24 px-6 text-center relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-emerald-500/5 rounded-full blur-[120px]" />
+        </div>
+        <div className="relative max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-white/50 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Plataforma de ferramentas matemáticas e financeiras
+          </div>
+          <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 leading-none">
+            <span className="text-white">matem</span><span className="text-emerald-400">á</span><span className="text-white">tico</span><span className="text-emerald-400">.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl sm:text-2xl text-white/40 font-light mb-4 tracking-wide">
+            Cálculos precisos. <span className="text-white/80 font-medium">Decisões inteligentes.</span>
           </p>
+          <p className="text-base text-white/30 max-w-xl mx-auto mb-12">
+            Um ecossistema de ferramentas especializadas em matemática financeira, desenvolvidas para profissionais que precisam de resultados confiáveis.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="https://amortizacao.matematico.com.br" className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105">
+              📊 Calculadora de Amortização
+            </Link>
+            <a href="#apps" className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 font-medium px-8 py-4 rounded-xl transition-all">
+              Ver todos os apps ↓
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* APPS */}
+      <section id="apps" className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ferramentas especializadas</h2>
+            <p className="text-white/40 max-w-xl mx-auto">Cada app é focado em um domínio específico da matemática financeira, com a profundidade que profissionais exigem.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {apps.map((app) => (
+              <div key={app.slug} className={`relative rounded-2xl border ${app.corBorda} bg-gradient-to-b ${app.corGrad} p-6 flex flex-col`}>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-4xl">{app.emoji}</span>
+                  {app.status === "ativo" ? (
+                    <span className="text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full">● Disponível</span>
+                  ) : (
+                    <span className="text-xs font-semibold bg-white/5 text-white/30 border border-white/10 px-2.5 py-1 rounded-full">Em breve</span>
+                  )}
+                </div>
+                <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${app.corTag}`}>{app.tagline}</p>
+                <h3 className="text-xl font-bold mb-3">{app.nome}</h3>
+                <p className="text-sm text-white/45 mb-5 flex-1 leading-relaxed">{app.descricao}</p>
+                <ul className="space-y-1.5 mb-6">
+                  {app.recursos.map((r) => (
+                    <li key={r} className="flex items-center gap-2 text-sm text-white/55">
+                      <span className={`text-xs ${app.corCheck}`}>✓</span>{r}
+                    </li>
+                  ))}
+                </ul>
+                {app.status === "ativo" ? (
+                  <Link href={app.url} className={`${app.corBtn} text-white text-sm font-semibold px-4 py-3 rounded-xl text-center transition-colors`}>
+                    Acessar {app.nome} →
+                  </Link>
+                ) : (
+                  <button disabled className="bg-white/5 text-white/25 text-sm font-semibold px-4 py-3 rounded-xl text-center cursor-not-allowed border border-white/5">
+                    Em desenvolvimento
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* DIFERENCIAIS */}
+      <section id="diferenciais" className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Por que o Matemático?</h2>
+            <p className="text-white/40 max-w-xl mx-auto">Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {diferenciais.map((d) => (
+              <div key={d.titulo} className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:bg-white/5 transition-colors">
+                <div className="text-3xl mb-4">{d.icone}</div>
+                <h3 className="font-bold text-lg mb-2">{d.titulo}</h3>
+                <p className="text-sm text-white/45 leading-relaxed">{d.descricao}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-3xl p-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Comece agora, gratuitamente</h2>
+            <p className="text-white/45 mb-8 text-lg">Calcule seu primeiro financiamento em menos de 2 minutos. Sem cartão de crédito.</p>
+            <Link href="https://amortizacao.matematico.com.br/cadastro" className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all hover:scale-105">
+              Criar conta grátis →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* RODAPÉ */}
+      <footer id="contato" className="border-t border-white/5 py-12 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl font-black"><span className="text-white">M</span><span className="text-emerald-400">.</span></span>
+                <span className="font-semibold text-white/60">matemático.com.br</span>
+              </div>
+              <p className="text-sm text-white/30">Cálculos precisos. Decisões inteligentes.</p>
+            </div>
+            <div className="flex flex-col items-center md:items-end gap-2">
+              <div className="flex gap-6 text-sm text-white/35">
+                <Link href="https://amortizacao.matematico.com.br" className="hover:text-white transition-colors">Amortização</Link>
+                <span className="text-white/15">Avaliação (breve)</span>
+                <span className="text-white/15">Atualização (breve)</span>
+              </div>
+              <a href="mailto:josecarlosfortes@gmail.com" className="text-sm text-white/35 hover:text-emerald-400 transition-colors">
+                josecarlosfortes@gmail.com
+              </a>
+            </div>
+          </div>
+          <div className="border-t border-white/5 mt-8 pt-8 text-center text-xs text-white/20">
+            © 2026 Matemático.com.br · Todos os direitos reservados
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
