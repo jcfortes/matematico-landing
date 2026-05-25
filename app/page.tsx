@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Simulador } from "./Simulador";
 
 const apps = [
   {
@@ -69,6 +70,7 @@ export default function Home() {
             <span className="text-sm font-semibold text-white/60 hidden sm:block">matemático.com.br</span>
           </div>
           <div className="flex items-center gap-6">
+            <a href="#simulador" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Simular</a>
             <a href="#apps" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Apps</a>
             <a href="#diferenciais" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Por que usar</a>
             <a href="#contato" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Contato</a>
@@ -102,12 +104,15 @@ export default function Home() {
             <Link href="https://amortizacao.matematico.com.br" className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105">
               📊 Calculadora de Amortização
             </Link>
-            <a href="#apps" className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 font-medium px-8 py-4 rounded-xl transition-all">
-              Ver todos os apps ↓
+            <a href="#simulador" className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 font-medium px-8 py-4 rounded-xl transition-all">
+              Simular agora ↓
             </a>
           </div>
         </div>
       </section>
+
+      {/* SIMULADOR */}
+      <Simulador />
 
       {/* APPS */}
       <section id="apps" className="py-24 px-6 border-t border-white/5">
