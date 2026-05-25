@@ -95,7 +95,7 @@ export default function Home() {
             <span className="text-white">matem</span><span className="text-emerald-400">á</span><span className="text-white">tico</span><span className="text-emerald-400">.</span>
           </h1>
           <p className="text-xl sm:text-2xl text-white/40 font-light mb-4 tracking-wide">
-            Cálculos precisos. <span className="text-white/80 font-medium">Decisões inteligentes.</span>
+            <span className="text-white/80 font-medium">Clareza Financeira.</span>
           </p>
           <p className="text-base text-white/30 max-w-xl mx-auto mb-12">
             Um ecossistema de ferramentas especializadas em matemática financeira, desenvolvidas para profissionais que precisam de resultados confiáveis.
@@ -198,7 +198,7 @@ export default function Home() {
                 <span className="text-2xl font-black"><span className="text-white">M</span><span className="text-emerald-400">.</span></span>
                 <span className="font-semibold text-white/60">matemático.com.br</span>
               </div>
-              <p className="text-sm text-white/30">Cálculos precisos. Decisões inteligentes.</p>
+              <p className="text-sm text-white/30">Clareza Financeira.</p>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
               <div className="flex gap-6 text-sm text-white/35">
