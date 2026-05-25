@@ -63,11 +63,8 @@ export default function Home() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#080808]/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tight">
-              <span className="text-white">M</span><span className="text-emerald-400">.</span>
-            </span>
-            <span className="text-sm font-semibold text-white/60 hidden sm:block">matemático.com.br</span>
+          <div>
+            <img src="/logo-matematico.png" alt="Matemático" className="h-8 w-auto brightness-0 invert" />
           </div>
           <div className="flex items-center gap-6">
             <a href="#simulador" className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block">Simular</a>
@@ -194,10 +191,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl font-black"><span className="text-white">M</span><span className="text-emerald-400">.</span></span>
-                <span className="font-semibold text-white/60">matemático.com.br</span>
-              </div>
+              <img src="/logo-matematico.png" alt="Matemático" className="h-8 w-auto brightness-0 invert opacity-60 mb-1" />
               <p className="text-sm text-white/30">Clareza Financeira.</p>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
