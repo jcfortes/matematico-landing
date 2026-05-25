@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 
 // ── Cálculos ────────────────────────────────────────────────────────────────
@@ -36,13 +36,13 @@ export function Simulador() {
   const [valor, setValor] = useState('')
   const [prazo, setPrazo] = useState('')
   const [taxa, setTaxa] = useState('')
-  const [sistema, setSistema] = useState<'price' | 'sac'>('price')
+  const [sistema, setSistema] = useState<'price' | 'sac' | 'variavel'>('price')
 
   const pv = parseFloat(valor.replace(/\./g, '').replace(',', '.')) || 0
   const n = parseInt(prazo) || 0
   const t = parseFloat(taxa.replace(',', '.')) || 0
 
-  const resultado = sistema === 'price' ? calcPrice(pv, t, n) : calcSAC(pv, t, n)
+  const resultado = sistema === 'sac' ? calcSAC(pv, t, n) : calcPrice(pv, t, n)
   const pronto = pv > 0 && n > 0 && t > 0
 
   // Máscara simples de número brasileiro para o campo valor
@@ -81,21 +81,30 @@ export function Simulador() {
             {/* Sistema */}
             <div>
               <label className="text-xs text-white/50 uppercase tracking-wider mb-2 block">Sistema</label>
-              <div className="grid grid-cols-2 gap-2">
-                {(['price', 'sac'] as const).map((s) => (
+              <div className="grid grid-cols-3 gap-2">
+                {([
+                  { key: 'price',   label: 'Price' },
+                  { key: 'sac',     label: 'SAC' },
+                  { key: 'variavel',label: 'Variável' },
+                ] as const).map(({ key, label }) => (
                   <button
-                    key={s}
-                    onClick={() => setSistema(s)}
+                    key={key}
+                    onClick={() => setSistema(key)}
                     className={`py-2.5 rounded-xl text-sm font-semibold transition-all border ${
-                      sistema === s
+                      sistema === key
                         ? 'bg-emerald-600 border-emerald-500 text-white'
                         : 'bg-white/5 border-white/10 text-white/50 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    {s === 'price' ? 'Tabela Price' : 'SAC'}
+                    {label}
                   </button>
                 ))}
               </div>
+              {sistema === 'variavel' && (
+                <p className="text-xs text-white/30 mt-2">
+                  Base Price com pagamentos balão — configure no app completo.
+                </p>
+              )}
             </div>
 
             {/* Valor */}
@@ -161,7 +170,7 @@ export function Simulador() {
                   {/* Parcela principal */}
                   <div>
                     <p className="text-xs text-white/40 uppercase tracking-wider mb-1">
-                      {sistema === 'price' ? 'Parcela fixa' : '1ª Parcela'}
+                      {sistema === 'price' || sistema === 'variavel' ? 'Parcela base (Price)' : '1ª Parcela'}
                     </p>
                     <p className="text-4xl font-black text-emerald-400">
                       {moeda(resultado.parcela)}
@@ -169,6 +178,11 @@ export function Simulador() {
                     {sistema === 'sac' && 'ultimaParcela' in resultado && (
                       <p className="text-sm text-white/40 mt-1">
                         Última parcela: <span className="text-white/70">{moeda((resultado as any).ultimaParcela)}</span>
+                      </p>
+                    )}
+                    {sistema === 'variavel' && (
+                      <p className="text-sm text-white/40 mt-1">
+                        Configure os balões no app completo
                       </p>
                     )}
                   </div>
