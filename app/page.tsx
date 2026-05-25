@@ -34,17 +34,17 @@ const apps = [
   },
   {
     slug: "atualizacao",
-    url: "#",
+    url: "https://atualizacao.matematico.com.br",
     emoji: "📈",
     nome: "Atualização",
     tagline: "Atualização de Valores",
     descricao: "Atualize valores pela inflação com IPCA, IGPM, INPC e outros índices. Calcule juros, multas e correções monetárias com precisão.",
     recursos: ["IPCA, IGPM, INPC", "Juros e multas", "Série histórica", "Exportar laudo"],
-    status: "breve",
-    corBorda: "border-purple-500/20",
-    corGrad: "from-purple-500/10 to-purple-500/3",
+    status: "ativo",
+    corBorda: "border-purple-500/30",
+    corGrad: "from-purple-500/15 to-purple-500/3",
     corCheck: "text-purple-400",
-    corBtn: "",
+    corBtn: "bg-purple-600 hover:bg-purple-500",
     corTag: "text-purple-400",
   },
 ];
@@ -204,7 +204,7 @@ export default function Home() {
               <div className="flex gap-6 text-sm text-white/35">
                 <Link href="https://amortizacao.matematico.com.br" className="hover:text-white transition-colors">Amortização</Link>
                 <span className="text-white/15">Avaliação (breve)</span>
-                <span className="text-white/15">Atualização (breve)</span>
+                <Link href="https://atualizacao.matematico.com.br" className="hover:text-white transition-colors">Atualização</Link>
               </div>
               <a href="mailto:josecarlosfortes@gmail.com" className="text-sm text-white/35 hover:text-emerald-400 transition-colors">
                 josecarlosfortes@gmail.com
