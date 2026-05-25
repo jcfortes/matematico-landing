@@ -42,7 +42,7 @@ export function Simulador() {
   const n = parseInt(prazo) || 0
   const t = parseFloat(taxa.replace(',', '.')) || 0
 
-  const resultado = sistema === 'sac' ? calcSAC(pv, t, n) : calcPrice(pv, t, n)
+  const resultado = sistema === 'variavel' ? null : sistema === 'sac' ? calcSAC(pv, t, n) : calcPrice(pv, t, n)
   const pronto = pv > 0 && n > 0 && t > 0
 
   // Máscara simples de número brasileiro para o campo valor
@@ -100,11 +100,6 @@ export function Simulador() {
                   </button>
                 ))}
               </div>
-              {sistema === 'variavel' && (
-                <p className="text-xs text-white/30 mt-2">
-                  Base Price com pagamentos balão — configure no app completo.
-                </p>
-              )}
             </div>
 
             {/* Valor */}
@@ -156,21 +151,56 @@ export function Simulador() {
 
           {/* Resultado */}
           <div className={`rounded-2xl p-6 border flex flex-col justify-between transition-all ${
-            pronto && resultado
+            sistema === 'variavel'
+              ? 'bg-gradient-to-b from-purple-500/10 to-transparent border-purple-500/20'
+              : pronto && resultado
               ? 'bg-gradient-to-b from-emerald-500/10 to-transparent border-emerald-500/20'
               : 'bg-white/3 border-white/8'
           }`}>
-            {!pronto ? (
+
+            {/* Estado: Variável selecionado */}
+            {sistema === 'variavel' ? (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-6 py-4">
+                <div className="text-5xl">🎯</div>
+                <div>
+                  <p className="text-lg font-bold text-white mb-2">
+                    Amortização Variável
+                  </p>
+                  <p className="text-white/50 text-sm leading-relaxed">
+                    Configure pagamentos balão em parcelas específicas, reduza prazo ou parcela e veja o cronograma completo com custo efetivo total.
+                  </p>
+                </div>
+                <div className="w-full space-y-2">
+                  <Link
+                    href="https://amortizacao.matematico.com.br/cadastro"
+                    className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl transition-all hover:scale-105 text-sm w-full"
+                  >
+                    Criar conta grátis e simular →
+                  </Link>
+                  <Link
+                    href="https://amortizacao.matematico.com.br/login"
+                    className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 font-medium px-6 py-3 rounded-xl transition-all text-sm w-full"
+                  >
+                    Já tenho conta → Entrar
+                  </Link>
+                  <p className="text-center text-xs text-white/25">
+                    Grátis · Sem cartão de crédito
+                  </p>
+                </div>
+              </div>
+
+            ) : !pronto ? (
               <div className="flex items-center justify-center h-full text-white/20 text-sm">
                 Preencha os campos ao lado →
               </div>
+
             ) : resultado ? (
               <>
                 <div className="space-y-5">
                   {/* Parcela principal */}
                   <div>
                     <p className="text-xs text-white/40 uppercase tracking-wider mb-1">
-                      {sistema === 'price' || sistema === 'variavel' ? 'Parcela base (Price)' : '1ª Parcela'}
+                      {sistema === 'price' ? 'Parcela fixa' : '1ª Parcela'}
                     </p>
                     <p className="text-4xl font-black text-emerald-400">
                       {moeda(resultado.parcela)}
@@ -178,11 +208,6 @@ export function Simulador() {
                     {sistema === 'sac' && 'ultimaParcela' in resultado && (
                       <p className="text-sm text-white/40 mt-1">
                         Última parcela: <span className="text-white/70">{moeda((resultado as any).ultimaParcela)}</span>
-                      </p>
-                    )}
-                    {sistema === 'variavel' && (
-                      <p className="text-sm text-white/40 mt-1">
-                        Configure os balões no app completo
                       </p>
                     )}
                   </div>
