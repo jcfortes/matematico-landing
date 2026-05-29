@@ -164,20 +164,20 @@ function BlocoAcordeao({
 
       {/* Paginação — Ver mais (texto discreto, não botão) */}
       {temMais && (
-        <div className="text-center mt-6">
+        <div className="text-left mt-4 pl-1">
           <button
             type="button"
             onClick={() => setMostrar((n) => n + POR_PAGINA)}
             className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
           >
-            Ver mais
+            Ver mais…
           </button>
         </div>
       )}
 
       {/* Ver menos */}
       {!temMais && filtradas.length > POR_PAGINA && (
-        <div className="text-center mt-6">
+        <div className="text-left mt-4 pl-1">
           <button
             type="button"
             onClick={() => { setMostrar(POR_PAGINA); setAberto(null) }}
