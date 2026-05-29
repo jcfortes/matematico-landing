@@ -24,16 +24,22 @@ export async function PUT(request: NextRequest) {
 
   const erros: string[] = []
   for (const item of body.items) {
-    if (typeof item?.key !== 'string' || typeof item?.valor !== 'string') {
-      erros.push(`Item inválido: ${JSON.stringify(item)}`)
+    if (typeof item?.key !== 'string') {
+      erros.push(`Item inválido (sem key): ${JSON.stringify(item)}`)
+      continue
+    }
+    const payload: Record<string, unknown> = {
+      atualizado_em: new Date().toISOString(),
+    }
+    if (typeof item.valor === 'string') payload.valor = item.valor
+    if (item.estilo !== undefined) payload.estilo = item.estilo ?? {}
+    if (Object.keys(payload).length === 1) {
+      // só tem atualizado_em — nada para atualizar
       continue
     }
     const { error } = await supabaseAdmin
       .from('landing_content')
-      .update({
-        valor: item.valor,
-        atualizado_em: new Date().toISOString(),
-      })
+      .update(payload)
       .eq('key', item.key)
     if (error) erros.push(`${item.key}: ${error.message}`)
   }

@@ -113,18 +113,18 @@ export default async function Home() {
         <div className="relative max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-white/70 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            {c('hero.badge', 'Plataforma de ferramentas matemáticas e financeiras')}
+            <span className={c.classes('hero.badge')}>{c('hero.badge', 'Plataforma de ferramentas matemáticas e financeiras')}</span>
           </div>
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 leading-none">
             <span className="text-white">matem</span><span className="text-emerald-400">á</span><span className="text-white">tico</span><span className="text-emerald-400">.</span>
           </h1>
           <p className="text-xl sm:text-2xl text-white/60 font-light mb-4 tracking-wide">
-            <span className="text-white/90 font-medium">{c('hero.tagline', 'Clareza Financeira.')}</span>
+            <span className={`text-white/90 font-medium ${c.classes('hero.tagline')}`}>{c('hero.tagline', 'Clareza Financeira.')}</span>
           </p>
-          <p className="text-base text-white/55 max-w-xl mx-auto mb-12">
+          <p className={`text-base text-white/55 max-w-xl mx-auto mb-12 ${c.classes('hero.descricao')}`}>
             {c('hero.descricao', 'Um ecossistema de ferramentas especializadas em matemática financeira, desenvolvidas para profissionais que precisam de resultados confiáveis.')}
           </p>
-          <a href="#simulador" className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105">
+          <a href="#simulador" className={`inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-8 py-4 rounded-xl transition-all hover:scale-105 ${c.classes('hero.cta')}`}>
             {c('hero.cta', 'Simular agora ↓')}
           </a>
         </div>
@@ -137,8 +137,8 @@ export default async function Home() {
       <section id="apps" className="py-24 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">{c('apps.titulo', 'Ferramentas especializadas')}</h2>
-            <p className="text-white/60 max-w-xl mx-auto">{c('apps.descricao', 'Cada app é focado em um domínio específico da matemática financeira, com a profundidade que profissionais exigem.')}</p>
+            <h2 className={`text-3xl sm:text-4xl font-bold mb-4 ${c.classes('apps.titulo')}`}>{c('apps.titulo', 'Ferramentas especializadas')}</h2>
+            <p className={`text-white/60 max-w-xl mx-auto ${c.classes('apps.descricao')}`}>{c('apps.descricao', 'Cada app é focado em um domínio específico da matemática financeira, com a profundidade que profissionais exigem.')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {apps.map((app) => (
@@ -183,15 +183,15 @@ export default async function Home() {
       <section id="diferenciais" className="py-24 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">{c('diferenciais.titulo', 'Por que o Matemático?')}</h2>
-            <p className="text-white/60 max-w-xl mx-auto">{c('diferenciais.descricao', 'Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.')}</p>
+            <h2 className={`text-3xl sm:text-4xl font-bold mb-4 ${c.classes('diferenciais.titulo')}`}>{c('diferenciais.titulo', 'Por que o Matemático?')}</h2>
+            <p className={`text-white/60 max-w-xl mx-auto ${c.classes('diferenciais.descricao')}`}>{c('diferenciais.descricao', 'Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((n) => (
               <div key={n} className="bg-white/3 border border-white/8 rounded-2xl p-6 hover:bg-white/5 transition-colors">
-                <div className="text-3xl mb-4">{c(`diferenciais.${n}.icone`, diferenciais[n - 1].icone)}</div>
-                <h3 className="font-bold text-lg mb-2">{c(`diferenciais.${n}.titulo`, diferenciais[n - 1].titulo)}</h3>
-                <p className="text-sm text-white/65 leading-relaxed">{c(`diferenciais.${n}.descricao`, diferenciais[n - 1].descricao)}</p>
+                <div className={`text-3xl mb-4 ${c.classes(`diferenciais.${n}.icone`)}`}>{c(`diferenciais.${n}.icone`, diferenciais[n - 1].icone)}</div>
+                <h3 className={`font-bold text-lg mb-2 ${c.classes(`diferenciais.${n}.titulo`)}`}>{c(`diferenciais.${n}.titulo`, diferenciais[n - 1].titulo)}</h3>
+                <p className={`text-sm text-white/65 leading-relaxed ${c.classes(`diferenciais.${n}.descricao`)}`}>{c(`diferenciais.${n}.descricao`, diferenciais[n - 1].descricao)}</p>
               </div>
             ))}
           </div>
@@ -202,9 +202,9 @@ export default async function Home() {
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center">
           <div className="bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-3xl p-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">{c('cta.titulo', 'Comece agora, gratuitamente')}</h2>
-            <p className="text-white/65 mb-8 text-lg">{c('cta.descricao', 'Calcule seu primeiro financiamento em menos de 2 minutos. Sem cartão de crédito.')}</p>
-            <Link href="https://amortizacao.matematico.com.br/cadastro" className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all hover:scale-105">
+            <h2 className={`text-3xl sm:text-4xl font-bold mb-4 ${c.classes('cta.titulo')}`}>{c('cta.titulo', 'Comece agora, gratuitamente')}</h2>
+            <p className={`text-white/65 mb-8 text-lg ${c.classes('cta.descricao')}`}>{c('cta.descricao', 'Calcule seu primeiro financiamento em menos de 2 minutos. Sem cartão de crédito.')}</p>
+            <Link href="https://amortizacao.matematico.com.br/cadastro" className={`inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all hover:scale-105 ${c.classes('cta.botao')}`}>
               {c('cta.botao', 'Criar conta grátis →')}
             </Link>
           </div>
@@ -242,14 +242,14 @@ export default async function Home() {
 
           {/* Aviso técnico/jurídico */}
           <div className="border-t border-white/5 mt-8 pt-6 max-w-3xl mx-auto">
-            <p className="text-[11px] text-white/40 leading-relaxed text-center">
+            <p className={`text-[11px] text-white/40 leading-relaxed text-center ${c.classes('rodape.aviso')}`}>
               <span className="font-semibold text-white/55">⚠️ Aviso importante:</span>{' '}
               {c('rodape.aviso', 'A plataforma é uma ferramenta de apoio ao trabalho profissional e não substitui a revisão por contador, advogado ou especialista qualificado.')}{' '}
               Ver <Link href="/termos" className="text-emerald-400/80 hover:text-emerald-400 underline">Termos de Uso completos</Link>.
             </p>
           </div>
 
-          <div className="border-t border-white/5 mt-6 pt-6 text-center text-xs text-white/40">
+          <div className={`border-t border-white/5 mt-6 pt-6 text-center text-xs text-white/40 ${c.classes('rodape.copyright')}`}>
             {c('rodape.copyright', '© 2026 Matemático.com.br · Todos os direitos reservados')}
           </div>
         </div>

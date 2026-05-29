@@ -17,9 +17,14 @@ create table if not exists landing_content (
   valor text not null,                   -- conteúdo atual (texto plano ou JSON serializado)
   valor_padrao text not null,            -- valor original do código (fallback)
   descricao text,                        -- ajuda contextual no admin
+  estilo jsonb not null default '{}'::jsonb, -- { tamanho, peso, cor, estilo, alinhamento }
   atualizado_em timestamptz default now() not null,
   atualizado_por uuid references auth.users(id) on delete set null
 );
+
+-- Adicionar coluna estilo em tabelas já criadas (idempotente)
+alter table landing_content
+  add column if not exists estilo jsonb not null default '{}'::jsonb;
 
 create index if not exists landing_content_secao_ordem_idx
   on landing_content (secao, ordem);
