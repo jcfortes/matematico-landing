@@ -167,7 +167,7 @@ export function NavClient() {
             {logado ? (
               <button
                 onClick={handleSair}
-                className="text-base font-semibold text-emerald-400 hover:text-emerald-300 transition-colors py-2.5 text-left cursor-pointer"
+                className="text-base font-semibold text-emerald-400 hover:text-emerald-300 transition-colors py-2.5 text-left cursor-pointer mt-3 pt-4 border-t border-white/10"
               >
                 Sair →
               </button>
