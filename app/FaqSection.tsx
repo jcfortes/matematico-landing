@@ -162,37 +162,28 @@ function BlocoAcordeao({
         <p className="text-center text-white/40 text-sm py-8">Nenhum item neste assunto ainda.</p>
       )}
 
-      {/* Paginação — Ver mais */}
+      {/* Paginação — Ver mais (texto discreto, não botão) */}
       {temMais && (
-        <div className="flex justify-center mt-6">
+        <div className="text-center mt-6">
           <button
             type="button"
             onClick={() => setMostrar((n) => n + POR_PAGINA)}
-            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-sm"
+            className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
           >
             Ver mais
-            <span className="text-white/70 font-normal">
-              ({filtradas.length - visiveis.length} restantes)
-            </span>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
           </button>
         </div>
       )}
 
-      {/* Botão Ver menos */}
+      {/* Ver menos */}
       {!temMais && filtradas.length > POR_PAGINA && (
-        <div className="flex justify-center mt-6">
+        <div className="text-center mt-6">
           <button
             type="button"
             onClick={() => { setMostrar(POR_PAGINA); setAberto(null) }}
-            className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors"
+            className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
           >
             Ver menos
-            <svg className="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
           </button>
         </div>
       )}
