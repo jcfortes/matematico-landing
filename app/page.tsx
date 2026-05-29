@@ -184,6 +184,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">{c('diferenciais.titulo', 'Por que o Matemático?')}</h2>
+            <p className="text-white/60 max-w-xl mx-auto">{c('diferenciais.descricao', 'Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((n) => (

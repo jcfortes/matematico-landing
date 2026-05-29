@@ -68,12 +68,16 @@ insert into landing_content (key, secao, ordem, tipo, valor, valor_padrao, descr
 )
 on conflict (key) do nothing;
 
--- DIFERENCIAIS (título da seção)
+-- DIFERENCIAIS (título + descrição da seção)
 insert into landing_content (key, secao, ordem, tipo, valor, valor_padrao, descricao) values
 ('diferenciais.titulo', 'Diferenciais', 10, 'texto',
  'Por que o Matemático?',
  'Por que o Matemático?',
  'Título da seção de diferenciais (4 cards com ícones)'
+), ('diferenciais.descricao', 'Diferenciais', 11, 'texto',
+ 'Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.',
+ 'Desenvolvido para quem precisa de resultados confiáveis, não de aproximações.',
+ 'Subtítulo/resumo da seção (texto curto abaixo do título)'
 )
 on conflict (key) do nothing;
 
