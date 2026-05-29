@@ -219,7 +219,7 @@ export default async function Home() {
       <footer className="border-t border-white/5 py-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col items-center gap-3 w-full">
-            <div className="flex gap-6 text-sm text-white/55">
+            <div className="flex gap-6 text-sm text-white/55 flex-wrap justify-center">
               <Link href="https://atualizacao.matematico.com.br" className="hover:text-white transition-colors">Sistema de Atualização Monetária</Link>
               <Link href="https://amortizacao.matematico.com.br" className="hover:text-white transition-colors">Sistema de Amortização e Financiamento</Link>
               <span className="text-white/30">Avaliação (breve)</span>
@@ -227,8 +227,25 @@ export default async function Home() {
             <a href="mailto:josecarlosfortes@gmail.com" className="text-sm text-white/55 hover:text-emerald-400 transition-colors">
               josecarlosfortes@gmail.com
             </a>
+            <div className="flex gap-5 text-xs text-white/40 mt-2">
+              <Link href="/termos" className="hover:text-emerald-400 transition-colors">Termos de Uso</Link>
+              <Link href="/privacidade" className="hover:text-emerald-400 transition-colors">Política de Privacidade</Link>
+            </div>
           </div>
-          <div className="border-t border-white/5 mt-8 pt-8 text-center text-xs text-white/40">
+
+          {/* Aviso técnico/jurídico */}
+          <div className="border-t border-white/5 mt-8 pt-6 max-w-3xl mx-auto">
+            <p className="text-[11px] text-white/40 leading-relaxed text-center">
+              <span className="font-semibold text-white/55">⚠️ Aviso importante:</span> A plataforma é uma ferramenta de apoio
+              ao trabalho profissional e <strong>não substitui a revisão por contador, advogado ou especialista qualificado</strong>.
+              Trata-se de obrigação de meio — os resultados dependem de dados informados pelo usuário, fontes públicas (Banco Central,
+              IBGE, FGV) e tecnologias de terceiros (incluindo IA), todos sujeitos a falhas e indisponibilidades.
+              Confira sempre os cálculos antes de utilizá-los para fins contratuais, judiciais ou comerciais.
+              Ver <Link href="/termos" className="text-emerald-400/80 hover:text-emerald-400 underline">Termos de Uso completos</Link>.
+            </p>
+          </div>
+
+          <div className="border-t border-white/5 mt-6 pt-6 text-center text-xs text-white/40">
             © 2026 Matemático.com.br · Todos os direitos reservados
           </div>
         </div>
