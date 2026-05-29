@@ -162,29 +162,28 @@ function BlocoAcordeao({
         <p className="text-center text-white/40 text-sm py-8">Nenhum item neste assunto ainda.</p>
       )}
 
-      {/* Paginação — Ver mais (texto discreto, não botão) */}
-      {temMais && (
-        <div className="text-left mt-4 pl-1">
-          <button
-            type="button"
-            onClick={() => setMostrar((n) => n + POR_PAGINA)}
-            className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
-          >
-            Ver mais…
-          </button>
-        </div>
-      )}
+      {/* Paginação — Ver mais (esquerda) + Ver menos (direita, quando expandido) */}
+      {(temMais || mostrar > POR_PAGINA) && (
+        <div className="flex items-center justify-between mt-4 px-1">
+          {temMais ? (
+            <button
+              type="button"
+              onClick={() => setMostrar((n) => n + POR_PAGINA)}
+              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
+            >
+              Ver mais…
+            </button>
+          ) : <span />}
 
-      {/* Ver menos */}
-      {!temMais && filtradas.length > POR_PAGINA && (
-        <div className="text-left mt-4 pl-1">
-          <button
-            type="button"
-            onClick={() => { setMostrar(POR_PAGINA); setAberto(null) }}
-            className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
-          >
-            Ver menos
-          </button>
+          {mostrar > POR_PAGINA && (
+            <button
+              type="button"
+              onClick={() => { setMostrar(POR_PAGINA); setAberto(null) }}
+              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer ml-auto"
+            >
+              Ver menos
+            </button>
+          )}
         </div>
       )}
     </div>
