@@ -1,62 +1,29 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { getLandingContent } from "@/lib/landing-content";
+import { SEO_KEYWORDS_FLAT } from "@/lib/seo-keywords";
 
 const TITLE_BASE = "Matemático.com.br — Clareza Financeira em Cálculos Profissionais";
 const DESCRICAO_BASE = "Plataforma de calculadoras financeiras profissionais: atualização monetária por IPCA, IGPM, INPC; simulação de financiamentos Price, SAC e variável; CET completo; demonstrativo de composição; exportação em PDF e Excel. Para advogados, contadores e consultores.";
 const SITE_URL = "https://matematico.com.br";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const c = await getLandingContent()
+  const titulo = c('seo.titulo', TITLE_BASE)
+  const descricao = c('seo.descricao', DESCRICAO_BASE)
+  const googleVerif = c('seo.google_verification', '')
+
+  return {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: TITLE_BASE,
+    default: titulo,
     template: "%s · Matemático.com.br",
   },
-  description: DESCRICAO_BASE,
+  description: descricao,
   applicationName: "Matemático.com.br",
   authors: [{ name: "Matemático.com.br" }],
   generator: "Next.js",
-  keywords: [
-    // Atualização monetária
-    "atualização monetária",
-    "correção monetária",
-    "IPCA",
-    "IGPM",
-    "INPC",
-    "INCC",
-    "SELIC",
-    "CDI",
-    "TR",
-    "calculadora de atualização monetária",
-    "juros de mora",
-    "multa moratória",
-    "honorários advocatícios",
-    // Amortização e financiamento
-    "amortização",
-    "sistema price",
-    "tabela price",
-    "sistema SAC",
-    "sistema de amortização constante",
-    "amortização variável",
-    "balões",
-    "carência",
-    "financiamento imobiliário",
-    "financiamento de veículo",
-    "CET",
-    "custo efetivo total",
-    "IOF",
-    "calculadora de financiamento",
-    "cronograma de amortização",
-    // Geral / matemática financeira
-    "matemática financeira",
-    "ferramentas financeiras",
-    "calculadora financeira profissional",
-    "advogados",
-    "contadores",
-    "consultores financeiros",
-    "perito",
-    "valuation",
-    "avaliação de empresas",
-  ],
+  keywords: SEO_KEYWORDS_FLAT,
   category: "finance",
   alternates: {
     canonical: SITE_URL,
@@ -77,8 +44,8 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: SITE_URL,
     siteName: "Matemático.com.br",
-    title: TITLE_BASE,
-    description: DESCRICAO_BASE,
+    title: titulo,
+    description: descricao,
     images: [
       {
         url: "/og-image.png",
@@ -90,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: TITLE_BASE,
-    description: DESCRICAO_BASE,
+    title: titulo,
+    description: descricao,
     images: ["/og-image.png"],
   },
   icons: {
@@ -100,11 +67,9 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
   },
-  verification: {
-    // Adicione aqui o código do Google Search Console quando configurar:
-    // google: "xxxxxxxxxxxxxxxx",
-  },
-};
+    verification: googleVerif ? { google: googleVerif } : {},
+  }
+}
 
 export default function RootLayout({
   children,

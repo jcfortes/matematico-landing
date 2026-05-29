@@ -3,6 +3,7 @@
 export const PAGINAS_ADMIN = [
   { slug: 'landing',          label: '🏠 Landing (textos)',     href: '/admin/landing' },
   { slug: 'landing-apps',     label: '📱 Apps (LP)',            href: '/admin/landing/apps' },
+  { slug: 'seo',              label: '🔍 SEO',                  href: '/admin/seo' },
   { slug: 'contratantes',     label: '👥 Contratantes',         href: '/admin/contratantes' },
   { slug: 'contatos',         label: '✉️ Contatos',             href: '/admin/contatos' },
   { slug: 'base-conhecimento', label: '📚 Base de Conhecimento', href: '/admin/base-conhecimento' },
