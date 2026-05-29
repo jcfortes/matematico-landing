@@ -112,7 +112,7 @@ export default function NovaSenhaPage() {
         </div>
 
         <p className="text-center text-white/30 text-xs mt-6">
-          <Link href="/auth" className="hover:text-white/60 transition-colors">← Voltar ao login</Link>
+          <Link href="/auth" className="hover:text-emerald-400 transition-colors">← Voltar ao login</Link>
         </p>
       </div>
     </div>

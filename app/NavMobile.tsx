@@ -19,7 +19,7 @@ export function NavMobile() {
       {/* Botão hambúrguer */}
       <button
         onClick={() => setOpen(!open)}
-        className="p-2 text-white/60 hover:text-white transition-colors"
+        className="p-2 text-white/60 hover:text-emerald-400 transition-colors"
         aria-label="Menu"
       >
         {open ? (
@@ -41,7 +41,7 @@ export function NavMobile() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="text-base text-white/60 hover:text-white transition-colors py-1"
+              className="text-base text-white/60 hover:text-emerald-400 transition-colors py-1"
             >
               {item.label}
             </a>

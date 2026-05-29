@@ -51,7 +51,7 @@ export function NavClient() {
       {/* ── DESKTOP ── */}
       <div className="hidden sm:flex items-center gap-6">
         {linksBefore.map((l) => (
-          <a key={l.href} href={l.href} className="text-base text-white/70 hover:text-white transition-colors">
+          <a key={l.href} href={l.href} className="text-base text-white/70 hover:text-emerald-400 transition-colors">
             {l.label}
           </a>
         ))}
@@ -60,7 +60,7 @@ export function NavClient() {
         <div className="relative">
           <button
             onClick={() => setAppsOpen(!appsOpen)}
-            className="text-base text-white/70 hover:text-white transition-colors flex items-center gap-1"
+            className="text-base text-white/70 hover:text-emerald-400 transition-colors flex items-center gap-1"
           >
             Aplicativos
             <svg className={`w-4 h-4 transition-transform ${appsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,7 @@ export function NavClient() {
                   key={app.href}
                   href={app.href}
                   onClick={() => setAppsOpen(false)}
-                  className="block px-4 py-3 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                  className="block px-4 py-3 text-sm text-white/70 hover:text-emerald-400 hover:bg-white/5 transition-colors"
                 >
                   {app.label}
                 </Link>
@@ -84,7 +84,7 @@ export function NavClient() {
         </div>
 
         {linksAfter.map((l) => (
-          <a key={l.href} href={l.href} className="text-base text-white/70 hover:text-white transition-colors">
+          <a key={l.href} href={l.href} className="text-base text-white/70 hover:text-emerald-400 transition-colors">
             {l.label}
           </a>
         ))}
@@ -94,7 +94,7 @@ export function NavClient() {
           {logado ? (
             <button
               onClick={handleSair}
-              className="text-sm font-semibold text-white/50 hover:text-white transition-colors px-3 py-2 cursor-pointer"
+              className="text-sm font-semibold text-white/50 hover:text-emerald-400 transition-colors px-3 py-2 cursor-pointer"
             >
               Sair →
             </button>
@@ -102,7 +102,7 @@ export function NavClient() {
             <>
               <Link
                 href="/auth"
-                className="text-sm font-semibold text-white/70 hover:text-white transition-colors px-3 py-2"
+                className="text-sm font-semibold text-white/70 hover:text-emerald-400 transition-colors px-3 py-2"
               >
                 Login
               </Link>
@@ -121,7 +121,7 @@ export function NavClient() {
       <div className="sm:hidden">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 text-white/60 hover:text-white transition-colors"
+          className="p-2 text-white/60 hover:text-emerald-400 transition-colors"
           aria-label="Menu"
         >
           {mobileOpen ? (
@@ -140,7 +140,7 @@ export function NavClient() {
           <div className="absolute top-full left-0 right-0 bg-[#0f0f0f] border-b border-white/10 py-4 px-6 flex flex-col gap-1 z-50">
             {linksBefore.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
-                className="text-base text-white/75 hover:text-white transition-colors py-2.5 border-b border-white/5">
+                className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 border-b border-white/5">
                 {l.label}
               </a>
             ))}
@@ -158,7 +158,7 @@ export function NavClient() {
 
             {linksAfter.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
-                className="text-base text-white/75 hover:text-white transition-colors py-2.5 border-b border-white/5">
+                className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 border-b border-white/5">
                 {l.label}
               </a>
             ))}
@@ -168,14 +168,14 @@ export function NavClient() {
               {logado ? (
                 <button
                   onClick={handleSair}
-                  className="text-base text-white/50 hover:text-white transition-colors py-2.5 text-center border border-white/10 rounded-xl cursor-pointer"
+                  className="text-base text-white/50 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl cursor-pointer"
                 >
                   Sair →
                 </button>
               ) : (
                 <>
                   <Link href="/auth" onClick={() => setMobileOpen(false)}
-                    className="text-base text-white/75 hover:text-white transition-colors py-2.5 text-center border border-white/10 rounded-xl">
+                    className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl">
                     Login
                   </Link>
                   <Link href="/auth?aba=criar" onClick={() => setMobileOpen(false)}

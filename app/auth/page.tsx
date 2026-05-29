@@ -225,7 +225,7 @@ function AuthForm() {
         </div>
 
         <p className="text-center text-white/30 text-xs mt-6">
-          <Link href="/" className="hover:text-white/60 transition-colors">← Voltar ao site</Link>
+          <Link href="/" className="hover:text-emerald-400 transition-colors">← Voltar ao site</Link>
         </p>
       </div>
     </div>

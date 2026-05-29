@@ -220,8 +220,8 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col items-center gap-3 w-full">
             <div className="flex gap-6 text-sm text-white/55 flex-wrap justify-center">
-              <Link href="https://atualizacao.matematico.com.br" className="hover:text-white transition-colors">Sistema de Atualização Monetária</Link>
-              <Link href="https://amortizacao.matematico.com.br" className="hover:text-white transition-colors">Sistema de Amortização e Financiamento</Link>
+              <Link href="https://atualizacao.matematico.com.br" className="hover:text-emerald-400 transition-colors">Sistema de Atualização Monetária</Link>
+              <Link href="https://amortizacao.matematico.com.br" className="hover:text-emerald-400 transition-colors">Sistema de Amortização e Financiamento</Link>
               <span className="text-white/30">Avaliação (breve)</span>
             </div>
             <Link href="/#contato" className="text-sm text-white/55 hover:text-emerald-400 transition-colors">
