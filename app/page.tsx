@@ -225,7 +225,7 @@ export default async function Home() {
               <span className="text-white/30">Avaliação (breve)</span>
             </div>
             <Link href="/#contato" className="text-sm text-white/55 hover:text-emerald-400 transition-colors">
-              Fale conosco pelo formulário de contato
+              Contato
             </Link>
             <div className="flex gap-5 text-xs text-white/40 mt-2">
               <Link href="/termos" className="hover:text-emerald-400 transition-colors">Termos de Uso</Link>
