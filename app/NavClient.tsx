@@ -15,7 +15,6 @@ const linksBefore = [
 
 const linksAfter = [
   { label: 'Simular', href: '#simulador' },
-  { label: 'Ferramentas', href: '#apps' },
   { label: 'Base de Conhecimento', href: '#base-conhecimento' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contato', href: '#contato' },
