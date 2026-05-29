@@ -164,12 +164,12 @@ function BlocoAcordeao({
 
       {/* Paginação — Ver mais (esquerda) + Ver menos (direita, quando expandido) */}
       {(temMais || mostrar > POR_PAGINA) && (
-        <div className="flex items-center justify-between mt-4 px-1">
+        <div className="flex items-center justify-between gap-4 mt-4 pt-3 px-1 border-t border-white/5 flex-wrap">
           {temMais ? (
             <button
               type="button"
               onClick={() => setMostrar((n) => n + POR_PAGINA)}
-              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer"
+              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer whitespace-nowrap"
             >
               Ver mais…
             </button>
@@ -179,7 +179,7 @@ function BlocoAcordeao({
             <button
               type="button"
               onClick={() => setMostrar((n) => Math.max(POR_PAGINA, n - POR_PAGINA))}
-              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer ml-auto"
+              className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer ml-auto whitespace-nowrap"
             >
               Ver menos
             </button>
