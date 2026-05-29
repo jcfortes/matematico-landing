@@ -171,7 +171,7 @@ export function LandingAdminClient({ itens }: { itens: Item[] }) {
                       <button
                         type="button"
                         onClick={() => setEstiloAberto((p) => ({ ...p, [i.key]: !aberto }))}
-                        className={`text-xs transition-colors ${temEstilo ? 'text-emerald-400 hover:text-emerald-300' : 'text-white/40 hover:text-white/70'}`}
+                        className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
                       >
                         🎨 Estilo {temEstilo && '✓'}
                       </button>
