@@ -178,7 +178,7 @@ function BlocoAcordeao({
           {mostrar > POR_PAGINA && (
             <button
               type="button"
-              onClick={() => { setMostrar(POR_PAGINA); setAberto(null) }}
+              onClick={() => setMostrar((n) => Math.max(POR_PAGINA, n - POR_PAGINA))}
               className="text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors cursor-pointer ml-auto"
             >
               Ver menos
