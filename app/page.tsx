@@ -6,6 +6,7 @@ import { ContatoSection } from "./ContatoSection";
 import { supabase } from "@/lib/supabase";
 import { getLandingContent } from "@/lib/landing-content";
 import { getLandingApps, appCorPorStatus } from "@/lib/landing-apps";
+import { JsonLd } from "./JsonLd";
 
 const diferenciais = [
   { icone: "🎯", titulo: "Precisão", descricao: "Cálculos baseados em matemática financeira rigorosa, com resultados confiáveis para decisões importantes." },
@@ -46,6 +47,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-[#080808] text-white">
+      <JsonLd apps={apps} />
 
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#080808]/80 backdrop-blur-md">
