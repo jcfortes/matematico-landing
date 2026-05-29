@@ -156,6 +156,9 @@ export default async function Home() {
                       <span className={`text-xs ${app.corCheck}`}>✓</span>{r}
                     </li>
                   ))}
+                  <li className={`flex items-center gap-2 text-sm font-semibold italic pl-5 ${app.corTag}`}>
+                    e muito mais…
+                  </li>
                 </ul>
                 {app.status === "ativo" ? (
                   <Link href={app.url} className={`${app.corBtn} text-white text-sm font-semibold px-4 py-3 rounded-xl text-center transition-colors`}>
