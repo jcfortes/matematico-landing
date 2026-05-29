@@ -164,27 +164,25 @@ export function NavClient() {
             ))}
 
             {/* Auth mobile */}
-            <div className="flex flex-col gap-2 pt-3">
-              {logado ? (
-                <button
-                  onClick={handleSair}
-                  className="text-base text-white/50 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl cursor-pointer"
-                >
-                  Sair →
-                </button>
-              ) : (
-                <>
-                  <Link href="/auth" onClick={() => setMobileOpen(false)}
-                    className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl">
-                    Login
-                  </Link>
-                  <Link href="/auth?aba=criar" onClick={() => setMobileOpen(false)}
-                    className="text-base font-bold bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-center transition-all">
-                    Criar conta
-                  </Link>
-                </>
-              )}
-            </div>
+            {logado ? (
+              <button
+                onClick={handleSair}
+                className="text-base font-semibold text-emerald-400 hover:text-emerald-300 transition-colors py-2.5 text-left cursor-pointer"
+              >
+                Sair →
+              </button>
+            ) : (
+              <div className="flex flex-col gap-2 pt-3">
+                <Link href="/auth" onClick={() => setMobileOpen(false)}
+                  className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl">
+                  Login
+                </Link>
+                <Link href="/auth?aba=criar" onClick={() => setMobileOpen(false)}
+                  className="text-base font-bold bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-center transition-all">
+                  Criar conta
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
