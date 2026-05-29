@@ -200,8 +200,8 @@ export function ContratantesClient({ users }: { users: User[] }) {
             onClick={() => setFiltroStatus(f.key)}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
               filtroStatus === f.key
-                ? 'bg-emerald-600 border-emerald-500 text-white'
-                : 'bg-white/5 border-white/10 text-white/50 hover:text-white hover:bg-white/10'
+                ? 'bg-emerald-600 border-emerald-500 text-white hover:bg-emerald-500'
+                : 'bg-white/5 border-emerald-500/40 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400'
             }`}
           >
             {f.label}
