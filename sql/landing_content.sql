@@ -28,6 +28,24 @@ comment on table landing_content
   is 'CMS leve da landing — textos editáveis via /admin/landing';
 
 -- ============================================================
+-- RLS — permitir leitura pública (anon + authenticated)
+-- ============================================================
+-- Os textos da LP são públicos por natureza, então qualquer
+-- visitante (mesmo não logado) precisa lê-los.
+-- INSERT/UPDATE/DELETE permanecem restritos ao service_role
+-- usado pelo admin (que bypassa RLS).
+-- ============================================================
+
+alter table landing_content enable row level security;
+
+drop policy if exists "anon pode ler landing_content" on landing_content;
+create policy "anon pode ler landing_content"
+  on landing_content
+  for select
+  to anon, authenticated
+  using (true);
+
+-- ============================================================
 -- Seed inicial: textos atuais da LP
 -- ============================================================
 -- IDEMPOTENTE: usa "on conflict do nothing" para não sobrescrever
