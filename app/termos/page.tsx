@@ -147,13 +147,9 @@ export default function TermosPage() {
             <section>
               <h2 className="text-xl font-bold text-white mb-3">12. Contato</h2>
               <p>
-                Em caso de dúvidas, sugestões ou solicitações relativas a estes Termos, entre em contato pelo
-                e-mail{' '}
-                <a href="mailto:josecarlosfortes@gmail.com" className="text-emerald-400 hover:text-emerald-300 underline">
-                  josecarlosfortes@gmail.com
-                </a>
-                {' '}ou pela <Link href="/#contato" className="text-emerald-400 hover:text-emerald-300 underline">seção Contato</Link>{' '}
-                na página inicial.
+                Em caso de dúvidas, sugestões ou solicitações relativas a estes Termos, utilize o{' '}
+                <Link href="/#contato" className="text-emerald-400 hover:text-emerald-300 underline">formulário de contato</Link>{' '}
+                na página inicial. Responderemos em até 2 dias úteis.
               </p>
             </section>
 

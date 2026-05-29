@@ -59,10 +59,9 @@ export default function PrivacidadePage() {
               <h2 className="text-xl font-bold text-white mb-3">4. Seus direitos (LGPD)</h2>
               <p>
                 Você pode solicitar acesso, correção, portabilidade ou exclusão dos seus dados a qualquer momento,
-                enviando solicitação para{' '}
-                <a href="mailto:josecarlosfortes@gmail.com" className="text-emerald-400 hover:text-emerald-300 underline">
-                  josecarlosfortes@gmail.com
-                </a>.
+                enviando sua solicitação pelo{' '}
+                <Link href="/#contato" className="text-emerald-400 hover:text-emerald-300 underline">formulário de contato</Link>{' '}
+                na página inicial.
               </p>
             </section>
 
@@ -78,10 +77,9 @@ export default function PrivacidadePage() {
             <section>
               <h2 className="text-xl font-bold text-white mb-3">6. Contato</h2>
               <p>
-                Para qualquer dúvida sobre privacidade, escreva para{' '}
-                <a href="mailto:josecarlosfortes@gmail.com" className="text-emerald-400 hover:text-emerald-300 underline">
-                  josecarlosfortes@gmail.com
-                </a>.
+                Para qualquer dúvida sobre privacidade, utilize o{' '}
+                <Link href="/#contato" className="text-emerald-400 hover:text-emerald-300 underline">formulário de contato</Link>{' '}
+                na página inicial.
               </p>
             </section>
           </article>

@@ -224,9 +224,9 @@ export default async function Home() {
               <Link href="https://amortizacao.matematico.com.br" className="hover:text-white transition-colors">Sistema de Amortização e Financiamento</Link>
               <span className="text-white/30">Avaliação (breve)</span>
             </div>
-            <a href="mailto:josecarlosfortes@gmail.com" className="text-sm text-white/55 hover:text-emerald-400 transition-colors">
-              josecarlosfortes@gmail.com
-            </a>
+            <Link href="/#contato" className="text-sm text-white/55 hover:text-emerald-400 transition-colors">
+              Fale conosco pelo formulário de contato
+            </Link>
             <div className="flex gap-5 text-xs text-white/40 mt-2">
               <Link href="/termos" className="hover:text-emerald-400 transition-colors">Termos de Uso</Link>
               <Link href="/privacidade" className="hover:text-emerald-400 transition-colors">Política de Privacidade</Link>
