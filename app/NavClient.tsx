@@ -10,20 +10,37 @@ const apps = [
   { label: 'Valuation Empresarial', href: 'https://avaliacao.matematico.com.br' },
 ]
 
-const linksBefore = [
-  { label: 'Início', href: '#' },
-]
-
 interface NavClientProps {
+  textoInicio?: string
+  textoAplicativos?: string
   textoSimular?: string
+  textoBaseConhecimento?: string
+  textoFaq?: string
+  textoContato?: string
+  textoSair?: string
+  textoLogin?: string
+  textoCriarConta?: string
 }
 
-export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
+export function NavClient({
+  textoInicio = 'Início',
+  textoAplicativos = 'Aplicativos',
+  textoSimular = 'Simular',
+  textoBaseConhecimento = 'Base de Conhecimento',
+  textoFaq = 'FAQ',
+  textoContato = 'Contato',
+  textoSair = 'Sair →',
+  textoLogin = 'Login',
+  textoCriarConta = 'Criar conta',
+}: NavClientProps = {}) {
+  const linksBefore = [
+    { label: textoInicio, href: '#' },
+  ]
   const linksAfter = [
     { label: textoSimular, href: '#simulador' },
-    { label: 'Base de Conhecimento', href: '#base-conhecimento' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contato', href: '#contato' },
+    { label: textoBaseConhecimento, href: '#base-conhecimento' },
+    { label: textoFaq, href: '#faq' },
+    { label: textoContato, href: '#contato' },
   ]
 
   const links = [...linksBefore, ...linksAfter]
@@ -65,7 +82,7 @@ export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
             onClick={() => setAppsOpen(!appsOpen)}
             className="text-base text-white/70 hover:text-emerald-400 transition-colors flex items-center gap-1"
           >
-            Aplicativos
+            {textoAplicativos}
             <svg className={`w-4 h-4 transition-transform ${appsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -99,7 +116,7 @@ export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
               onClick={handleSair}
               className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors px-3 py-2 cursor-pointer"
             >
-              Sair →
+              {textoSair}
             </button>
           ) : (
             <>
@@ -107,13 +124,13 @@ export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
                 href="/auth"
                 className="text-sm font-semibold text-white/70 hover:text-emerald-400 transition-colors px-3 py-2"
               >
-                Login
+                {textoLogin}
               </Link>
               <Link
                 href="/auth?aba=criar"
                 className="text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl transition-all"
               >
-                Criar conta
+                {textoCriarConta}
               </Link>
             </>
           )}
@@ -150,7 +167,7 @@ export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
 
             {/* Aplicativos */}
             <div className="py-1 border-b border-white/5">
-              <p className="text-xs text-white/30 uppercase tracking-wider mb-2 pt-1">Aplicativos</p>
+              <p className="text-xs text-white/30 uppercase tracking-wider mb-2 pt-1">{textoAplicativos}</p>
               {apps.map((app) => (
                 <Link key={app.href} href={app.href} onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-2 text-base text-emerald-400 hover:text-emerald-300 transition-colors py-2.5">
@@ -172,17 +189,17 @@ export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
                 onClick={handleSair}
                 className="text-base font-semibold text-emerald-400 hover:text-emerald-300 transition-colors py-2.5 text-left cursor-pointer mt-3 pt-4 border-t border-white/10"
               >
-                Sair →
+                {textoSair}
               </button>
             ) : (
               <div className="flex flex-col gap-2 pt-3">
                 <Link href="/auth" onClick={() => setMobileOpen(false)}
                   className="text-base text-white/75 hover:text-emerald-400 transition-colors py-2.5 text-center border border-white/10 rounded-xl">
-                  Login
+                  {textoLogin}
                 </Link>
                 <Link href="/auth?aba=criar" onClick={() => setMobileOpen(false)}
                   className="text-base font-bold bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-center transition-all">
-                  Criar conta
+                  {textoCriarConta}
                 </Link>
               </div>
             )}

@@ -80,7 +80,15 @@ export default async function Home() {
             </a>
           </div>
           <NavClient
+            textoInicio={c('nav.inicio', 'Início')}
+            textoAplicativos={c('nav.aplicativos', 'Aplicativos')}
             textoSimular={c('nav.simular', 'Simular')}
+            textoBaseConhecimento={c('nav.base_conhecimento', 'Base de Conhecimento')}
+            textoFaq={c('nav.faq', 'FAQ')}
+            textoContato={c('nav.contato', 'Contato')}
+            textoSair={c('nav.sair', 'Sair →')}
+            textoLogin={c('nav.login', 'Login')}
+            textoCriarConta={c('nav.criar_conta', 'Criar conta')}
           />
         </div>
       </nav>
