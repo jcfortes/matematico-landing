@@ -80,6 +80,9 @@ export default async function Home() {
             </a>
           </div>
           <NavClient
+            apps={apps
+              .filter((a) => a.status === 'ativo' && a.url)
+              .map((a) => ({ label: a.nome, href: a.url! }))}
             textoInicio={c('nav.inicio', 'Início')}
             textoAplicativos={c('nav.aplicativos', 'Aplicativos')}
             textoSimular={c('nav.simular', 'Simular')}

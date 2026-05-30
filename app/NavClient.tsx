@@ -4,13 +4,16 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createSupabaseBrowser } from '@/lib/supabase-browser'
 
-const apps = [
+// Fallback caso o admin não envie a lista (acesso direto, banco offline, etc)
+const APPS_FALLBACK = [
   { label: 'Sistema de Atualização Monetária', href: 'https://atualizacao.matematico.com.br' },
   { label: 'Sistema de Amortização e Financiamento', href: 'https://amortizacao.matematico.com.br' },
   { label: 'Valuation Empresarial', href: 'https://avaliacao.matematico.com.br' },
 ]
 
 interface NavClientProps {
+  /** Lista de apps a exibir no dropdown — geralmente vem do landing_apps via admin */
+  apps?: { label: string; href: string }[]
   textoInicio?: string
   textoAplicativos?: string
   textoSimular?: string
@@ -23,6 +26,7 @@ interface NavClientProps {
 }
 
 export function NavClient({
+  apps: appsExternos,
   textoInicio = 'Início',
   textoAplicativos = 'Aplicativos',
   textoSimular = 'Simular',
@@ -33,6 +37,7 @@ export function NavClient({
   textoLogin = 'Login',
   textoCriarConta = 'Criar conta',
 }: NavClientProps = {}) {
+  const apps = appsExternos && appsExternos.length > 0 ? appsExternos : APPS_FALLBACK
   const linksBefore = [
     { label: textoInicio, href: '#' },
   ]
