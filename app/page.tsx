@@ -17,6 +17,28 @@ const diferenciais = [
 
 export const dynamic = 'force-dynamic'
 
+/**
+ * Renderiza o título da marca com destaque verde no que estiver entre colchetes.
+ * Ex: "matem[á]tico[.]" → matem(branco) + á(verde) + tico(branco) + .(verde)
+ * Sintaxe pensada pra ser editável no admin sem precisar mexer no código.
+ */
+function renderTituloMarca(texto: string): React.ReactNode {
+  const partes: React.ReactNode[] = []
+  const regex = /\[([^\]]+)\]|([^\[]+)/g
+  let match: RegExpExecArray | null
+  let idx = 0
+  while ((match = regex.exec(texto)) !== null) {
+    if (match[1] !== undefined) {
+      // dentro de colchetes → verde
+      partes.push(<span key={idx++} className="text-emerald-400">{match[1]}</span>)
+    } else if (match[2] !== undefined) {
+      // fora de colchetes → branco
+      partes.push(<span key={idx++} className="text-white">{match[2]}</span>)
+    }
+  }
+  return partes
+}
+
 export default async function Home() {
   // Conteúdo editável da LP (CMS leve) — busca com fallback hardcoded
   const c = await getLandingContent()
@@ -74,7 +96,7 @@ export default async function Home() {
             <span className={c.classes('hero.badge')}>{c('hero.badge', 'Plataforma de ferramentas matemáticas e financeiras')}</span>
           </div>
           <h1 className="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 leading-none">
-            <span className="text-white">matem</span><span className="text-emerald-400">á</span><span className="text-white">tico</span><span className="text-emerald-400">.</span>
+            {renderTituloMarca(c('hero.titulo_marca', 'matem[á]tico[.]'))}
           </h1>
           <p className="text-xl sm:text-2xl text-white/60 font-light mb-4 tracking-wide">
             <span className={`text-white/90 font-medium ${c.classes('hero.tagline')}`}>{c('hero.tagline', 'Clareza Financeira.')}</span>
