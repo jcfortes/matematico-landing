@@ -57,7 +57,9 @@ export default async function Home() {
               <img src="/logo-dark-v3.png" alt="Matemático" className="h-12 sm:h-16 w-auto" />
             </a>
           </div>
-          <NavClient />
+          <NavClient
+            textoSimular={c('nav.simular', 'Simular')}
+          />
         </div>
       </nav>
 
@@ -87,7 +89,13 @@ export default async function Home() {
       </section>
 
       {/* SIMULADOR */}
-      <Simulador />
+      <Simulador
+        textoBotaoCalcular={c('sim.botao_calcular', 'Calcular →')}
+        textoBotaoCriarConta={c('sim.botao_criar_conta', 'Criar conta grátis e simular →')}
+        textoBotaoLogin={c('sim.botao_login', 'Já tenho conta → Entrar')}
+        textoBotaoCronograma={c('sim.botao_cronograma', 'Salvar e ver cronograma completo →')}
+        textoBotaoLaudo={c('sim.botao_laudo', 'Ver laudo completo com exportação →')}
+      />
 
       {/* APPS */}
       <section id="apps" className="py-24 px-6 border-t border-white/5">
@@ -128,11 +136,11 @@ export default async function Home() {
                   </ul>
                   {app.status === "ativo" && app.url ? (
                     <Link href={app.url} className={`${cor.corBtn} text-white text-sm font-semibold px-4 py-3 rounded-xl text-center transition-colors`}>
-                      Acessar {app.nome} →
+                      {c('apps.botao_acessar', 'Acessar')} {app.nome} →
                     </Link>
                   ) : (
                     <button disabled className="bg-white/5 text-white/25 text-sm font-semibold px-4 py-3 rounded-xl text-center cursor-not-allowed border border-white/5">
-                      Em desenvolvimento
+                      {c('apps.botao_breve', 'Em desenvolvimento')}
                     </button>
                   )}
                 </div>

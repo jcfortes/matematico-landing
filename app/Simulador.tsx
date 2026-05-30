@@ -353,7 +353,19 @@ function PainelEntendaAtualizacao({ indice }: { indice: string }) {
 
 // ── Simulador Amortização ────────────────────────────────────────────────────
 
-function SimuladorAmortizacao() {
+interface SimuladorAmortizacaoProps {
+  textoBotaoCalcular: string
+  textoBotaoCriarConta: string
+  textoBotaoLogin: string
+  textoBotaoCronograma: string
+}
+
+function SimuladorAmortizacao({
+  textoBotaoCalcular,
+  textoBotaoCriarConta,
+  textoBotaoLogin,
+  textoBotaoCronograma,
+}: SimuladorAmortizacaoProps) {
   const [valor, setValor] = useState('')
   const [prazo, setPrazo] = useState('')
   const [taxa, setTaxa] = useState('')
@@ -441,7 +453,7 @@ function SimuladorAmortizacao() {
             disabled={!pronto && sistema !== 'variavel'}
             className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-white/10 disabled:text-white/30 text-white font-bold py-3 rounded-xl transition-all text-sm cursor-pointer"
           >
-            Calcular →
+            {textoBotaoCalcular}
           </button>
         </div>
 
@@ -460,10 +472,10 @@ function SimuladorAmortizacao() {
               </div>
               <div className="w-full space-y-2">
                 <Link href="https://amortizacao.matematico.com.br/cadastro" className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl cursor-pointer transition-all hover:scale-105 text-sm w-full">
-                  Criar conta grátis e simular →
+                  {textoBotaoCriarConta}
                 </Link>
                 <Link href="https://amortizacao.matematico.com.br/login" className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white/75 font-medium px-6 py-3 rounded-xl cursor-pointer transition-all text-sm w-full">
-                  Já tenho conta → Entrar
+                  {textoBotaoLogin}
                 </Link>
                 <p className="text-center text-xs text-white/45">Grátis · Sem cartão de crédito</p>
               </div>
@@ -507,7 +519,7 @@ function SimuladorAmortizacao() {
               </div>
               <div className="mt-auto pt-6 space-y-2">
                 <Link href={urlCadastro} className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl cursor-pointer transition-all hover:scale-105 text-sm w-full">
-                  Salvar e ver cronograma completo →
+                  {textoBotaoCronograma}
                 </Link>
                 <p className="text-center text-xs text-white/45">Grátis · Sem cartão de crédito</p>
               </div>
@@ -524,7 +536,11 @@ function SimuladorAmortizacao() {
 
 // ── Simulador Atualização ────────────────────────────────────────────────────
 
-function SimuladorAtualizacao() {
+interface SimuladorAtualizacaoProps {
+  textoBotaoLaudo: string
+}
+
+function SimuladorAtualizacao({ textoBotaoLaudo }: SimuladorAtualizacaoProps) {
   const [valor, setValor] = useState('')
   const [inicio, setInicio] = useState('')
   const [fim, setFim] = useState('')
@@ -681,7 +697,7 @@ function SimuladorAtualizacao() {
               </div>
               <div className="mt-6 space-y-2">
                 <Link href="https://atualizacao.matematico.com.br" className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl cursor-pointer transition-all hover:scale-105 text-sm w-full">
-                  Ver laudo completo com exportação →
+                  {textoBotaoLaudo}
                 </Link>
                 <p className="text-center text-xs text-white/45">Grátis · Dados oficiais do Banco Central</p>
               </div>
@@ -698,7 +714,21 @@ function SimuladorAtualizacao() {
 
 // ── Componente principal ─────────────────────────────────────────────────────
 
-export function Simulador() {
+interface SimuladorProps {
+  textoBotaoCalcular?: string
+  textoBotaoCriarConta?: string
+  textoBotaoLogin?: string
+  textoBotaoCronograma?: string
+  textoBotaoLaudo?: string
+}
+
+export function Simulador({
+  textoBotaoCalcular = 'Calcular →',
+  textoBotaoCriarConta = 'Criar conta grátis e simular →',
+  textoBotaoLogin = 'Já tenho conta → Entrar',
+  textoBotaoCronograma = 'Salvar e ver cronograma completo →',
+  textoBotaoLaudo = 'Ver laudo completo com exportação →',
+}: SimuladorProps = {}) {
   const [aba, setAba] = useState<'amortizacao' | 'atualizacao'>('amortizacao')
 
   return (
@@ -738,7 +768,16 @@ export function Simulador() {
         </div>
 
         {/* Conteúdo da aba */}
-        {aba === 'amortizacao' ? <SimuladorAmortizacao /> : <SimuladorAtualizacao />}
+        {aba === 'amortizacao' ? (
+          <SimuladorAmortizacao
+            textoBotaoCalcular={textoBotaoCalcular}
+            textoBotaoCriarConta={textoBotaoCriarConta}
+            textoBotaoLogin={textoBotaoLogin}
+            textoBotaoCronograma={textoBotaoCronograma}
+          />
+        ) : (
+          <SimuladorAtualizacao textoBotaoLaudo={textoBotaoLaudo} />
+        )}
 
       </div>
     </section>

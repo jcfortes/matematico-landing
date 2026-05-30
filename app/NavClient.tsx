@@ -14,16 +14,19 @@ const linksBefore = [
   { label: 'Início', href: '#' },
 ]
 
-const linksAfter = [
-  { label: 'Simular', href: '#simulador' },
-  { label: 'Base de Conhecimento', href: '#base-conhecimento' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Contato', href: '#contato' },
-]
+interface NavClientProps {
+  textoSimular?: string
+}
 
-const links = [...linksBefore, ...linksAfter]
+export function NavClient({ textoSimular = 'Simular' }: NavClientProps = {}) {
+  const linksAfter = [
+    { label: textoSimular, href: '#simulador' },
+    { label: 'Base de Conhecimento', href: '#base-conhecimento' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contato', href: '#contato' },
+  ]
 
-export function NavClient() {
+  const links = [...linksBefore, ...linksAfter]
   const [mobileOpen, setMobileOpen] = useState(false)
   const [appsOpen, setAppsOpen] = useState(false)
   const [logado, setLogado] = useState(false)
