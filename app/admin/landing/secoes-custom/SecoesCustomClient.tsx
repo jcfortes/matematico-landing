@@ -151,6 +151,32 @@ function ModalSecao({ secao, onClose }: { secao: SecaoCustom | null; onClose: ()
   const [descricao, setDescricao] = useState(secao?.descricao ?? '')
   const [imagemUrl, setImagemUrl] = useState(secao?.imagem_url ?? '')
   const [imagemPosicao, setImagemPosicao] = useState(secao?.imagem_posicao ?? 'sem')
+  const [uploadando, setUploadando] = useState(false)
+  const [erroUpload, setErroUpload] = useState('')
+
+  async function handleUpload(arquivo: File) {
+    setUploadando(true); setErroUpload('')
+    const formData = new FormData()
+    formData.append('file', arquivo)
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setErroUpload(data.error ?? 'Erro ao enviar')
+      } else {
+        setImagemUrl(data.url)
+        // Se imagem_posicao é 'sem', muda pra 'topo' por padrão
+        if (imagemPosicao === 'sem') setImagemPosicao('topo')
+      }
+    } catch (err) {
+      setErroUpload(err instanceof Error ? err.message : 'Erro de rede')
+    } finally {
+      setUploadando(false)
+    }
+  }
   const [ctaTexto, setCtaTexto] = useState(secao?.cta_texto ?? '')
   const [ctaUrl, setCtaUrl] = useState(secao?.cta_url ?? '')
   const [posicaoApos, setPosicaoApos] = useState(secao?.posicao_apos ?? 'cta')
@@ -218,9 +244,64 @@ function ModalSecao({ secao, onClose }: { secao: SecaoCustom | null; onClose: ()
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* ── Imagem (upload OU URL externa) ── */}
+          <div className="border border-white/10 rounded-xl p-3 space-y-3">
+            <label className="text-xs text-white/60 uppercase tracking-wider block">Imagem (opcional)</label>
+
+            {/* Preview se já tem */}
+            {imagemUrl && (
+              <div className="relative">
+                <img
+                  src={imagemUrl}
+                  alt="Preview"
+                  className="rounded-lg border border-white/10 max-h-40 w-auto mx-auto"
+                />
+                <button
+                  type="button"
+                  onClick={() => setImagemUrl('')}
+                  className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white text-xs px-2 py-1 rounded-md"
+                  title="Remover imagem"
+                >
+                  ✕ Remover
+                </button>
+              </div>
+            )}
+
+            {/* Botão upload */}
             <div>
-              <label className="text-xs text-white/60 uppercase tracking-wider mb-2 block">URL da imagem (opcional)</label>
+              <label className={`flex items-center justify-center gap-2 cursor-pointer border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5 rounded-xl py-3 px-4 text-sm text-emerald-300 transition-colors ${uploadando ? 'opacity-50 cursor-wait' : ''}`}>
+                {uploadando ? '⏳ Enviando...' : '📁 Enviar arquivo do meu computador'}
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/gif"
+                  disabled={uploadando}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0]
+                    if (f) handleUpload(f)
+                    e.target.value = '' // permite re-upload do mesmo arquivo
+                  }}
+                  className="hidden"
+                />
+              </label>
+              <p className="text-[10px] text-white/40 mt-1.5 text-center">
+                PNG, JPG, WebP ou GIF · até 5MB
+              </p>
+              {erroUpload && (
+                <p className="text-xs text-red-400 mt-1">{erroUpload}</p>
+              )}
+            </div>
+
+            {/* OU URL externa */}
+            <div className="relative flex items-center gap-2">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-[10px] text-white/40 uppercase tracking-wider">ou</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            <div>
+              <label className="text-[10px] text-white/40 uppercase tracking-wider mb-1.5 block">
+                Cole uma URL externa (ImgBB, Imgur, etc.)
+              </label>
               <input
                 type="url"
                 value={imagemUrl}
@@ -229,8 +310,12 @@ function ModalSecao({ secao, onClose }: { secao: SecaoCustom | null; onClose: ()
                 className={inputBase}
               />
             </div>
+
+            {/* Posição */}
             <div>
-              <label className="text-xs text-white/60 uppercase tracking-wider mb-2 block">Posição da imagem</label>
+              <label className="text-[10px] text-white/40 uppercase tracking-wider mb-1.5 block">
+                Posição da imagem no layout
+              </label>
               <select
                 value={imagemPosicao}
                 onChange={(e) => setImagemPosicao(e.target.value)}
