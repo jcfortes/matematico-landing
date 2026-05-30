@@ -7,6 +7,7 @@ import { createSupabaseBrowser } from '@/lib/supabase-browser'
 const apps = [
   { label: 'Sistema de Atualização Monetária', href: 'https://atualizacao.matematico.com.br' },
   { label: 'Sistema de Amortização e Financiamento', href: 'https://amortizacao.matematico.com.br' },
+  { label: 'Valuation Empresarial', href: 'https://avaliacao.matematico.com.br' },
 ]
 
 const linksBefore = [
