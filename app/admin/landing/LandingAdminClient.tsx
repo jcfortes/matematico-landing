@@ -284,7 +284,12 @@ export function LandingAdminClient({
                       </a>
                     </div>
                   )}
-                  {i.tipo === 'rich_text' || valor.length > 100 ? (
+                  {i.tipo === 'imagem' ? (
+                    <UploadImagem
+                      valor={valor}
+                      onChange={(novaUrl) => setValores((prev) => ({ ...prev, [i.key]: novaUrl }))}
+                    />
+                  ) : i.tipo === 'rich_text' || valor.length > 100 ? (
                     <textarea
                       value={valor}
                       onChange={(e) => setValores((prev) => ({ ...prev, [i.key]: e.target.value }))}
@@ -410,6 +415,88 @@ export function LandingAdminClient({
           {salvando ? 'Salvando...' : 'Salvar alterações'}
         </button>
       </div>
+    </div>
+  )
+}
+
+/**
+ * Widget de upload de imagem pra campos tipo='imagem' do landing_content.
+ * Permite upload direto do computador ou colar URL externa.
+ */
+function UploadImagem({ valor, onChange }: { valor: string; onChange: (url: string) => void }) {
+  const [uploadando, setUploadando] = useState(false)
+  const [erro, setErro] = useState('')
+
+  async function handleUpload(arquivo: File) {
+    setUploadando(true); setErro('')
+    const formData = new FormData()
+    formData.append('file', arquivo)
+    try {
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (!res.ok) setErro(data.error ?? 'Erro ao enviar')
+      else onChange(data.url)
+    } catch (err) {
+      setErro(err instanceof Error ? err.message : 'Erro de rede')
+    } finally {
+      setUploadando(false)
+    }
+  }
+
+  return (
+    <div className="space-y-3 border border-white/10 rounded-xl p-3 bg-[#0a0a0a]/50">
+      {/* Preview */}
+      {valor && (
+        <div className="relative bg-white/5 rounded-lg p-3 flex items-center justify-center min-h-[80px]">
+          <img
+            src={valor}
+            alt="Preview"
+            className="max-h-32 w-auto object-contain"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+          />
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white text-[10px] px-2 py-0.5 rounded"
+            title="Remover imagem"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* Botão upload */}
+      <label className={`flex items-center justify-center gap-2 cursor-pointer border-2 border-dashed border-emerald-500/30 hover:border-emerald-500/60 hover:bg-emerald-500/5 rounded-xl py-3 px-4 text-sm text-emerald-300 transition-colors ${uploadando ? 'opacity-50 cursor-wait' : ''}`}>
+        {uploadando ? '⏳ Enviando...' : '📁 Enviar arquivo do meu computador'}
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+          disabled={uploadando}
+          onChange={(e) => {
+            const f = e.target.files?.[0]
+            if (f) handleUpload(f)
+            e.target.value = ''
+          }}
+          className="hidden"
+        />
+      </label>
+
+      {erro && <p className="text-xs text-red-400">{erro}</p>}
+
+      {/* OU URL externa */}
+      <div className="relative flex items-center gap-2">
+        <div className="flex-1 h-px bg-white/10" />
+        <span className="text-[10px] text-white/40 uppercase tracking-wider">ou URL</span>
+        <div className="flex-1 h-px bg-white/10" />
+      </div>
+
+      <input
+        type="text"
+        value={valor}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="/logo-dark-v3.png ou https://..."
+        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-white/30 text-xs font-mono focus:outline-none focus:border-emerald-500/50"
+      />
     </div>
   )
 }

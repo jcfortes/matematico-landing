@@ -87,7 +87,7 @@ export default async function Home() {
         <div className="relative max-w-6xl mx-auto px-6 h-20 sm:h-24 flex items-center justify-between">
           <div>
             <a href="#">
-              <img src="/logo-dark-v3.png" alt="Matemático" className="h-12 sm:h-16 w-auto" />
+              <img src={c('marca.logo_url', '/logo-dark-v3.png')} alt="Matemático" className="h-12 sm:h-16 w-auto" />
             </a>
           </div>
           <NavClient
