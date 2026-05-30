@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
   },
