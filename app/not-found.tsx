@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Construction, ArrowLeft, MessageSquare } from 'lucide-react'
 
 /**
  * Página 404 da landing (tema escuro).
@@ -10,8 +9,8 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#080808] px-4">
       <div className="max-w-md w-full bg-white/3 border border-white/10 rounded-2xl p-8 text-center space-y-5">
-        <div className="mx-auto bg-amber-500/15 border border-amber-500/30 rounded-full p-4 w-20 h-20 flex items-center justify-center">
-          <Construction className="h-10 w-10 text-amber-400" />
+        <div className="mx-auto bg-amber-500/15 border border-amber-500/30 rounded-full p-4 w-20 h-20 flex items-center justify-center text-4xl">
+          🚧
         </div>
 
         <div>
@@ -32,16 +31,14 @@ export default function NotFound() {
             href="/"
             className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl transition-all w-full"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Voltar para a página inicial
+            ← Voltar para a página inicial
           </Link>
 
           <Link
             href="/#contato"
             className="flex items-center justify-center gap-2 w-full text-sm text-white/50 hover:text-emerald-400 py-2 transition-colors"
           >
-            <MessageSquare className="h-4 w-4" />
-            Reportar ou sugerir
+            💬 Reportar ou sugerir
           </Link>
         </div>
 
