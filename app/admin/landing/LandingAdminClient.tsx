@@ -48,8 +48,55 @@ const OPCOES_ALINHAMENTO = [
   { v: 'direita',  l: 'Direita' },
 ]
 
-export function LandingAdminClient({ itens }: { itens: Item[] }) {
+export function LandingAdminClient({
+  itens,
+  secoesOcultasIniciais = [],
+}: {
+  itens: Item[]
+  secoesOcultasIniciais?: string[]
+}) {
   const router = useRouter()
+  const [secoesOcultas, setSecoesOcultas] = useState<Set<string>>(
+    () => new Set(secoesOcultasIniciais)
+  )
+  const [excluindoSecao, setExcluindoSecao] = useState<string | null>(null)
+  const [confirmExclusao, setConfirmExclusao] = useState('')
+  const [processando, setProcessando] = useState(false)
+
+  async function toggleOcultarSecao(secao: string, ocultar: boolean) {
+    setProcessando(true)
+    const res = await fetch('/api/admin/landing/secoes', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secao, oculta: ocultar }),
+    })
+    setProcessando(false)
+    if (res.ok) {
+      setSecoesOcultas((prev) => {
+        const next = new Set(prev)
+        if (ocultar) next.add(secao)
+        else next.delete(secao)
+        return next
+      })
+    }
+  }
+
+  async function excluirSecao() {
+    if (!excluindoSecao) return
+    if (confirmExclusao !== excluindoSecao) return
+    setProcessando(true)
+    const res = await fetch('/api/admin/landing/secoes', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secao: excluindoSecao, confirmacao: confirmExclusao }),
+    })
+    setProcessando(false)
+    if (res.ok) {
+      setExcluindoSecao(null)
+      setConfirmExclusao('')
+      router.refresh()
+    }
+  }
   const [valores, setValores] = useState<Record<string, string>>(() => {
     const m: Record<string, string> = {}
     for (const i of itens) m[i.key] = i.valor
@@ -136,9 +183,53 @@ export function LandingAdminClient({ itens }: { itens: Item[] }) {
 
   return (
     <div className="space-y-8">
-      {[...porSecao.entries()].map(([secao, items]) => (
-        <div key={secao} className="border border-white/10 rounded-2xl p-6 bg-white/3">
-          <h2 className="text-base font-bold text-emerald-400 mb-4">{secao}</h2>
+      {[...porSecao.entries()].map(([secao, items]) => {
+        const oculta = secoesOcultas.has(secao)
+        return (
+        <div
+          key={secao}
+          className={`border rounded-2xl p-6 transition-colors ${
+            oculta
+              ? 'border-amber-500/30 bg-amber-500/5'
+              : 'border-white/10 bg-white/3'
+          }`}
+        >
+          <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className={`text-base font-bold ${oculta ? 'text-amber-400' : 'text-emerald-400'}`}>
+                {secao}
+              </h2>
+              {oculta && (
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+                  Oculta na landing
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => toggleOcultarSecao(secao, !oculta)}
+                disabled={processando}
+                className={`text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors ${
+                  oculta
+                    ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
+                    : 'border-white/15 text-white/70 hover:text-white hover:border-white/30 hover:bg-white/5'
+                }`}
+                title={oculta ? 'Mostrar essa seção na landing' : 'Esconder essa seção da landing'}
+              >
+                {oculta ? '👁 Mostrar' : '🚫 Ocultar'}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setExcluindoSecao(secao); setConfirmExclusao('') }}
+                disabled={processando}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-colors"
+                title="Excluir TODOS os campos dessa seção (irreversível)"
+              >
+                🗑 Excluir
+              </button>
+            </div>
+          </div>
           <div className="space-y-5">
             {items.map((i) => {
               const valor = valores[i.key]
@@ -255,7 +346,48 @@ export function LandingAdminClient({ itens }: { itens: Item[] }) {
             })}
           </div>
         </div>
-      ))}
+        )
+      })}
+
+      {/* Modal de confirmação de exclusão */}
+      {excluindoSecao && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-[#111] border border-red-500/30 rounded-2xl p-6 w-full max-w-md">
+            <h2 className="text-white font-bold text-lg mb-2">
+              ⚠ Excluir seção &quot;{excluindoSecao}&quot;?
+            </h2>
+            <p className="text-white/60 text-sm mb-1">
+              Esta ação <strong className="text-red-400">não pode ser desfeita</strong>. Todos os campos editáveis dessa seção serão removidos do banco.
+            </p>
+            <p className="text-white/60 text-sm mb-4">
+              Pra confirmar, digite <code className="bg-white/10 px-1.5 py-0.5 rounded text-red-300 font-mono">{excluindoSecao}</code> abaixo:
+            </p>
+            <input
+              type="text"
+              value={confirmExclusao}
+              onChange={(e) => setConfirmExclusao(e.target.value)}
+              placeholder={excluindoSecao}
+              autoFocus
+              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-white placeholder-white/30 text-sm mb-4 focus:outline-none focus:border-red-500/50"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={() => { setExcluindoSecao(null); setConfirmExclusao('') }}
+                className="flex-1 py-2.5 rounded-xl text-sm text-white/50 hover:text-white border border-white/10 hover:border-white/20 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={excluirSecao}
+                disabled={processando || confirmExclusao !== excluindoSecao}
+                className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-red-600 hover:bg-red-500 disabled:bg-white/10 disabled:text-white/30 text-white transition-colors"
+              >
+                {processando ? 'Excluindo...' : 'Excluir definitivamente'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Barra fixa de salvar */}
       <div className="sticky bottom-4 z-10 flex items-center justify-between gap-4 bg-[#0a0a0a]/95 backdrop-blur-md border border-white/10 rounded-2xl p-4 shadow-xl">

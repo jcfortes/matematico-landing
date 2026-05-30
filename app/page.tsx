@@ -6,6 +6,7 @@ import { ContatoSection } from "./ContatoSection";
 import { supabase } from "@/lib/supabase";
 import { getLandingContent } from "@/lib/landing-content";
 import { getLandingApps, appCorPorStatus } from "@/lib/landing-apps";
+import { getSecoesOcultas } from "@/lib/landing-secoes";
 import { JsonLd } from "./JsonLd";
 
 const diferenciais = [
@@ -43,6 +44,7 @@ export default async function Home() {
   // Conteúdo editável da LP (CMS leve) — busca com fallback hardcoded
   const c = await getLandingContent()
   const apps = await getLandingApps()
+  const secoesOcultas = await getSecoesOcultas()
 
   const [{ data: registros }, { data: assuntos }] = await Promise.all([
     supabase
@@ -97,6 +99,7 @@ export default async function Home() {
       </nav>
 
       {/* HERO */}
+      {!secoesOcultas.has('Hero') && (
       <section className="pt-48 sm:pt-52 pb-24 px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-emerald-500/5 rounded-full blur-[120px]" />
@@ -120,8 +123,10 @@ export default async function Home() {
           </a>
         </div>
       </section>
+      )}
 
       {/* SIMULADOR */}
+      {!secoesOcultas.has('Simulador') && (
       <Simulador
         textoBotaoCalcular={c('sim.botao_calcular', 'Calcular →')}
         textoBotaoCriarConta={c('sim.botao_criar_conta', 'Criar conta grátis e simular →')}
@@ -129,8 +134,10 @@ export default async function Home() {
         textoBotaoCronograma={c('sim.botao_cronograma', 'Salvar e ver cronograma completo →')}
         textoBotaoLaudo={c('sim.botao_laudo', 'Ver laudo completo com exportação →')}
       />
+      )}
 
       {/* APPS */}
+      {!secoesOcultas.has('Apps') && (
       <section id="apps" className="py-24 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -183,7 +190,10 @@ export default async function Home() {
         </div>
       </section>
 
+      )}
+
       {/* DIFERENCIAIS */}
+      {!secoesOcultas.has('Diferenciais') && (
       <section id="diferenciais" className="py-24 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -202,7 +212,10 @@ export default async function Home() {
         </div>
       </section>
 
+      )}
+
       {/* CTA */}
+      {!secoesOcultas.has('CTA') && (
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center">
           <div className="bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-3xl p-12">
@@ -215,16 +228,22 @@ export default async function Home() {
         </div>
       </section>
 
+      )}
+
       {/* Base de Conhecimento + FAQ (lado a lado) */}
+      {!secoesOcultas.has('Base e FAQ') && (
       <FaqSection
         baseRegistros={baseRegistros}
         baseAssuntos={baseAssuntos}
         faqRegistros={faqRegistros}
         faqAssuntos={faqAssuntos}
       />
+      )}
 
       {/* CONTATO */}
+      {!secoesOcultas.has('Contato') && (
       <ContatoSection />
+      )}
 
       {/* RODAPÉ */}
       <footer className="border-t border-white/5 py-12 px-6">
