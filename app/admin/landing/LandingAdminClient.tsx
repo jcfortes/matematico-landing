@@ -180,6 +180,19 @@ export function LandingAdminClient({ itens }: { itens: Item[] }) {
                   {i.descricao && (
                     <p className="text-xs text-white/45 leading-relaxed">{i.descricao}</p>
                   )}
+                  {/* Aviso especial pra chave nav.aplicativos: explicar onde editar nomes dos apps filhos */}
+                  {i.key === 'nav.aplicativos' && (
+                    <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2 text-xs text-emerald-200">
+                      💡 <strong>Atenção:</strong> Aqui você edita apenas o <em>rótulo do dropdown</em> (&quot;Aplicativos&quot;).
+                      Pra editar o <strong>nome dos apps</strong> que aparecem dentro do menu, vá em{' '}
+                      <a
+                        href="/admin/landing/apps"
+                        className="underline font-semibold hover:text-emerald-100"
+                      >
+                        Apps (LP) →
+                      </a>
+                    </div>
+                  )}
                   {i.tipo === 'rich_text' || valor.length > 100 ? (
                     <textarea
                       value={valor}
