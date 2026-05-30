@@ -12,6 +12,56 @@ interface User {
   status: string
   created_at: string
   last_sign_in_at: string | null
+  prazo_tipo: string
+  prazo_quantidade: number | null
+  prazo_inicio: string
+}
+
+/** Calcula a data de expiração e quantos dias faltam (ou que já passaram) */
+function calcularExpiracao(u: { prazo_tipo: string; prazo_quantidade: number | null; prazo_inicio: string }) {
+  if (u.prazo_tipo === 'indeterminado' || !u.prazo_quantidade) {
+    return { indeterminado: true, expirado: false, dataExpiracao: null, diasRestantes: null }
+  }
+  const inicio = new Date(u.prazo_inicio)
+  const expira = new Date(inicio)
+  if (u.prazo_tipo === 'dias') expira.setDate(expira.getDate() + u.prazo_quantidade)
+  if (u.prazo_tipo === 'meses') expira.setMonth(expira.getMonth() + u.prazo_quantidade)
+  if (u.prazo_tipo === 'anos') expira.setFullYear(expira.getFullYear() + u.prazo_quantidade)
+  const agora = new Date()
+  const msPorDia = 1000 * 60 * 60 * 24
+  const diasRestantes = Math.ceil((expira.getTime() - agora.getTime()) / msPorDia)
+  return {
+    indeterminado: false,
+    expirado: diasRestantes < 0,
+    dataExpiracao: expira,
+    diasRestantes,
+  }
+}
+
+function badgePrazo(u: User) {
+  const e = calcularExpiracao(u)
+  if (e.indeterminado) {
+    return <span className="text-xs text-white/40">∞ Indeterminado</span>
+  }
+  if (e.expirado) {
+    return (
+      <span className="text-xs font-semibold text-red-400">
+        ⚠ Expirou há {Math.abs(e.diasRestantes!)} {Math.abs(e.diasRestantes!) === 1 ? 'dia' : 'dias'}
+      </span>
+    )
+  }
+  if (e.diasRestantes! <= 7) {
+    return (
+      <span className="text-xs font-semibold text-amber-400">
+        ⏰ {e.diasRestantes} {e.diasRestantes === 1 ? 'dia restante' : 'dias restantes'}
+      </span>
+    )
+  }
+  return (
+    <span className="text-xs text-emerald-400">
+      ✓ {e.diasRestantes} dias
+    </span>
+  )
 }
 
 const STATUS_OPCOES = [
@@ -41,8 +91,20 @@ function ModalEditar({ user, onClose }: { user: User; onClose: () => void }) {
   const [nome, setNome] = useState(user.nome)
   const [email, setEmail] = useState(user.email)
   const [status, setStatus] = useState(user.status ?? 'cliente')
+  const [prazoTipo, setPrazoTipo] = useState(user.prazo_tipo ?? 'indeterminado')
+  const [prazoQuantidade, setPrazoQuantidade] = useState(user.prazo_quantidade?.toString() ?? '')
+  const [prazoInicio, setPrazoInicio] = useState(
+    user.prazo_inicio ? user.prazo_inicio.slice(0, 10) : new Date().toISOString().slice(0, 10)
+  )
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState('')
+
+  // Prévia de expiração em tempo real
+  const previa = calcularExpiracao({
+    prazo_tipo: prazoTipo,
+    prazo_quantidade: prazoQuantidade ? Number(prazoQuantidade) : null,
+    prazo_inicio: prazoInicio,
+  })
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 px-4">
@@ -87,6 +149,83 @@ function ModalEditar({ user, onClose }: { user: User; onClose: () => void }) {
               ))}
             </div>
           </div>
+          {/* ── Prazo de uso da plataforma ── */}
+          <div className="border-t border-white/10 pt-4 space-y-3">
+            <label className="text-xs text-white/60 uppercase tracking-wider block">
+              Prazo de uso da plataforma
+            </label>
+
+            <div>
+              <label className="text-[10px] text-white/40 uppercase tracking-wider mb-1.5 block">
+                Tipo
+              </label>
+              <select
+                value={prazoTipo}
+                onChange={(e) => setPrazoTipo(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+              >
+                <option value="indeterminado">Indeterminado (sem expiração)</option>
+                <option value="dias">Dias</option>
+                <option value="meses">Meses</option>
+                <option value="anos">Anos</option>
+              </select>
+            </div>
+
+            {prazoTipo !== 'indeterminado' && (
+              <>
+                <div>
+                  <label className="text-[10px] text-white/40 uppercase tracking-wider mb-1.5 block">
+                    Quantidade de {prazoTipo}
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={prazoQuantidade}
+                    onChange={(e) => setPrazoQuantidade(e.target.value)}
+                    placeholder={`Ex: ${prazoTipo === 'dias' ? '30' : prazoTipo === 'meses' ? '12' : '1'}`}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-white/40 uppercase tracking-wider mb-1.5 block">
+                    Data de início
+                  </label>
+                  <input
+                    type="date"
+                    value={prazoInicio}
+                    onChange={(e) => setPrazoInicio(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+                  />
+                </div>
+
+                {/* Prévia */}
+                {previa.dataExpiracao && (
+                  <div
+                    className={`text-xs px-3 py-2 rounded-lg border ${
+                      previa.expirado
+                        ? 'bg-red-500/10 border-red-500/30 text-red-300'
+                        : (previa.diasRestantes ?? 0) <= 7
+                        ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                        : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                    }`}
+                  >
+                    Expira em:{' '}
+                    <strong>{previa.dataExpiracao.toLocaleDateString('pt-BR')}</strong>
+                    {' · '}
+                    {previa.expirado
+                      ? `expirou há ${Math.abs(previa.diasRestantes!)} dias`
+                      : `${previa.diasRestantes} dias restantes`}
+                  </div>
+                )}
+              </>
+            )}
+            {prazoTipo === 'indeterminado' && (
+              <div className="text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white/50">
+                ∞ Sem expiração — usuário pode usar a plataforma indefinidamente.
+              </div>
+            )}
+          </div>
+
           {erro && <p className="text-red-400 text-sm">{erro}</p>}
           <div className="flex gap-2 pt-1">
             <button
@@ -102,7 +241,15 @@ function ModalEditar({ user, onClose }: { user: User; onClose: () => void }) {
                 const res = await fetch('/api/admin/contratantes', {
                   method: 'PATCH',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ id: user.id, nome, email, status }),
+                  body: JSON.stringify({
+                    id: user.id,
+                    nome,
+                    email,
+                    status,
+                    prazo_tipo: prazoTipo,
+                    prazo_quantidade: prazoTipo === 'indeterminado' ? null : (prazoQuantidade ? Number(prazoQuantidade) : null),
+                    prazo_inicio: new Date(prazoInicio + 'T00:00:00').toISOString(),
+                  }),
                 })
                 setLoading(false)
                 if (res.ok) { onClose(); router.refresh() }
@@ -228,6 +375,7 @@ export function ContratantesClient({ users }: { users: User[] }) {
             <tr className="border-b border-white/10 bg-white/3">
               <th className="text-left px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Nome / Email</th>
               <th className="text-left px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Status</th>
+              <th className="text-left px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Prazo</th>
               <th className="text-left px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Cadastro</th>
               <th className="text-left px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Último acesso</th>
               <th className="text-right px-5 py-3 text-white/50 font-semibold text-xs uppercase tracking-wider">Ações</th>
@@ -236,7 +384,7 @@ export function ContratantesClient({ users }: { users: User[] }) {
           <tbody>
             {filtrados.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-8 text-white/30 text-sm">
+                <td colSpan={6} className="text-center py-8 text-white/30 text-sm">
                   Nenhum resultado encontrado.
                 </td>
               </tr>
@@ -248,6 +396,7 @@ export function ContratantesClient({ users }: { users: User[] }) {
                     <p className="text-white/40 text-xs mt-0.5">{user.email}</p>
                   </td>
                   <td className="px-5 py-3.5">{badgeStatus(user.status ?? 'cliente')}</td>
+                  <td className="px-5 py-3.5">{badgePrazo(user)}</td>
                   <td className="px-5 py-3.5 text-white/50">{formatDate(user.created_at)}</td>
                   <td className="px-5 py-3.5 text-white/50">{formatDate(user.last_sign_in_at)}</td>
                   <td className="px-5 py-3.5 text-right">

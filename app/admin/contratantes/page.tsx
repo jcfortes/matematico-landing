@@ -6,7 +6,7 @@ export default async function ContratantesPage() {
   // Busca todos os usuários com role = contratante junto com dados de auth
   const { data: profiles } = await supabaseAdmin
     .from('profiles')
-    .select('id, nome, role, status, created_at')
+    .select('id, nome, role, status, created_at, prazo_tipo, prazo_quantidade, prazo_inicio')
     .eq('role', 'contratante')
     .order('created_at', { ascending: false })
 
@@ -21,6 +21,9 @@ export default async function ContratantesPage() {
     status: string
     created_at: string
     last_sign_in_at: string | null
+    prazo_tipo: string
+    prazo_quantidade: number | null
+    prazo_inicio: string
   }> = []
 
   for (const profile of lista) {
@@ -34,6 +37,9 @@ export default async function ContratantesPage() {
         status: (profile as any).status ?? 'cliente',
         created_at: profile.created_at,
         last_sign_in_at: user.last_sign_in_at ?? null,
+        prazo_tipo: (profile as any).prazo_tipo ?? 'indeterminado',
+        prazo_quantidade: (profile as any).prazo_quantidade ?? null,
+        prazo_inicio: (profile as any).prazo_inicio ?? profile.created_at,
       })
     }
   }
