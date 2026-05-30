@@ -7,6 +7,8 @@ import { supabase } from "@/lib/supabase";
 import { getLandingContent } from "@/lib/landing-content";
 import { getLandingApps, appCorPorStatus } from "@/lib/landing-apps";
 import { getSecoesOcultas } from "@/lib/landing-secoes";
+import { getSecoesCustomPorPosicao } from "@/lib/landing-secoes-custom";
+import { SecaoCustomizada } from "./SecaoCustomizada";
 import { JsonLd } from "./JsonLd";
 
 const diferenciais = [
@@ -45,6 +47,13 @@ export default async function Home() {
   const c = await getLandingContent()
   const apps = await getLandingApps()
   const secoesOcultas = await getSecoesOcultas()
+  const secoesCustomPorPos = await getSecoesCustomPorPosicao()
+
+  // Helper pra renderizar todas as seções custom de uma posição
+  const renderCustom = (pos: string) =>
+    (secoesCustomPorPos[pos] ?? []).map((s) => (
+      <SecaoCustomizada key={s.id} secao={s} />
+    ))
 
   const [{ data: registros }, { data: assuntos }] = await Promise.all([
     supabase
@@ -124,6 +133,7 @@ export default async function Home() {
         </div>
       </section>
       )}
+      {renderCustom('hero')}
 
       {/* SIMULADOR */}
       {!secoesOcultas.has('Simulador') && (
@@ -135,6 +145,7 @@ export default async function Home() {
         textoBotaoLaudo={c('sim.botao_laudo', 'Ver laudo completo com exportação →')}
       />
       )}
+      {renderCustom('simulador')}
 
       {/* APPS */}
       {!secoesOcultas.has('Apps') && (
@@ -191,6 +202,7 @@ export default async function Home() {
       </section>
 
       )}
+      {renderCustom('apps')}
 
       {/* DIFERENCIAIS */}
       {!secoesOcultas.has('Diferenciais') && (
@@ -213,6 +225,7 @@ export default async function Home() {
       </section>
 
       )}
+      {renderCustom('diferenciais')}
 
       {/* CTA */}
       {!secoesOcultas.has('CTA') && (
@@ -229,6 +242,7 @@ export default async function Home() {
       </section>
 
       )}
+      {renderCustom('cta')}
 
       {/* Base de Conhecimento + FAQ (lado a lado) */}
       {!secoesOcultas.has('Base e FAQ') && (
@@ -239,11 +253,14 @@ export default async function Home() {
         faqAssuntos={faqAssuntos}
       />
       )}
+      {renderCustom('base_faq')}
 
       {/* CONTATO */}
       {!secoesOcultas.has('Contato') && (
       <ContatoSection />
       )}
+      {renderCustom('contato')}
+      {renderCustom('fim')}
 
       {/* RODAPÉ */}
       <footer className="border-t border-white/5 py-12 px-6">
