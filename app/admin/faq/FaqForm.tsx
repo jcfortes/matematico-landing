@@ -29,6 +29,7 @@ interface Props {
 const categorias = [
   { value: 'amortizacao', label: 'Amortização' },
   { value: 'atualizacao', label: 'Atualização Monetária' },
+  { value: 'avaliacao', label: 'Valuation Empresarial' },
   { value: 'geral', label: 'Geral' },
 ]
 

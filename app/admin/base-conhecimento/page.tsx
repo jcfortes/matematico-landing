@@ -6,6 +6,7 @@ import { AdminLayout } from '../AdminLayout'
 const categoriaLabel: Record<string, string> = {
   amortizacao: 'Amortização',
   atualizacao: 'Atualização Monetária',
+  avaliacao: 'Valuation Empresarial',
   geral: 'Geral',
 }
 
